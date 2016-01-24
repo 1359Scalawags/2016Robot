@@ -1,5 +1,5 @@
 #include "WPILib.h"
-
+#include <VictorSP.h>
 
 const int LEFT_MOTOR_ID = NULL;
 const int RIGHT_MOTOR_ID = NULL;
@@ -11,7 +11,8 @@ const int LEFT_JOYSTICK_PORT = NULL;
 const int RIGHT_JOYSTICK_PORT = NULL;
 const int DRIVE_FORWARD = NULL;
 const int DRIVE_REVERSE = NULL;
-
+const int TEST_MOTOR_ID_1 = NULL;
+const int TEST_MOTOR_ID_2 = NULL;
 
 
 class Robot: public IterativeRobot
@@ -23,7 +24,10 @@ class Robot: public IterativeRobot
 	bool driveforward;
 	Encoder leftencoder;
 	Encoder rightencoder;
-
+	VictorSP leftA;
+	VictorSP leftB;
+	VictorSP rightA;
+	VictorSP rightB;
 	LiveWindow *lw;
 	int autoLoopCounter;
 
@@ -40,6 +44,12 @@ public:
 		autoLoopCounter(0)
 	{
 		chassis.SetExpiration(0.1);
+	}
+	void OperatorControl()
+	{
+		chassis.SetSafetyEnabled(true);
+
+
 	}
 
 private:
