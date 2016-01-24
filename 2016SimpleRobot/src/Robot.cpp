@@ -1,5 +1,19 @@
 #include "WPILib.h"
 
+
+
+const int RIGHT_CHANNEL_A = NULL;
+const int RIGHT_CHANNEL_B = NULL;
+const int LEFT_CHANNEL_A = NULL;
+const int LEFT_CHANNEL_B = NULL;
+const int LEFT_MOTOR_ID = NULL;
+const int RIGHT_MOTOR_ID = NULL;
+const int LEFT_JOYSTICK_PORT = NULL;
+const int RIGHT_JOYSTICK_PORT = NULL;
+const int DRIVE_FORWARD = NULL;
+const int DRIVE_REVERSE = NULL;
+
+
 class Robot: public IterativeRobot
 {
 
