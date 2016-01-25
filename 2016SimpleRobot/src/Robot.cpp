@@ -9,10 +9,11 @@ const int LEFT_CHANNEL_A = NULL;
 const int LEFT_CHANNEL_B = NULL;
 const int LEFT_JOYSTICK_PORT = NULL;
 const int RIGHT_JOYSTICK_PORT = NULL;
-const int DRIVE_FORWARD = NULL;
-const int DRIVE_REVERSE = NULL;
 const int TEST_MOTOR_ID_1 = NULL;
 const int TEST_MOTOR_ID_2 = NULL;
+const int BALL_HANDLER_MOTOR = NULL;
+const int BALL_SENSOR = NULL;
+
 
 
 class Robot: public IterativeRobot
@@ -49,8 +50,31 @@ public:
 	{
 		chassis.SetSafetyEnabled(true);
 
+		while(IsOperatorControl())
+		{
+			setDriveSpeed();
+			Wait(0.005) //wait for motor update time
+
+		}
 
 	}
+
+	void setDriveSpeed()
+	{
+		float leftstickvalue = -getJoystickTransform(leftstick.GetY());
+		float rightstickvalue = -getJoystickTransform(rightstick.GetY());
+
+		if(driveforward==true)
+			chassis.TankDrive(leftstickvalue, rightstickvalue);
+		else
+			chassis.TankDrive(-leftstickvalue, -rightstickvalue);
+	}
+
+	void getJoystickTransform(float input)
+	{
+
+	}
+
 
 private:
 	void AutonomousInit()
@@ -84,5 +108,6 @@ private:
 		lw->Run();
 	}
 };
+
 
 START_ROBOT_CLASS(Robot)
