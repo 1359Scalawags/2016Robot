@@ -1,5 +1,6 @@
 #include "WPILib.h"
 #include <VictorSP.h>
+#include <AxisCamera.h>
 
 const int LEFT_MOTOR_ID = NULL;
 const int RIGHT_MOTOR_ID = NULL;
@@ -16,6 +17,7 @@ const int BALL_SENSOR = NULL;
 
 
 
+
 class Robot: public IterativeRobot
 {
 
@@ -29,6 +31,7 @@ class Robot: public IterativeRobot
 	VictorSP leftB;
 	VictorSP rightA;
 	VictorSP rightB;
+	AxisCamera camera;
 	LiveWindow *lw;
 	int autoLoopCounter;
 
@@ -53,7 +56,7 @@ public:
 		while(IsOperatorControl())
 		{
 			setDriveSpeed();
-			Wait(0.005) //wait for motor update time
+			Wait(0.005); //wait for motor update time
 
 		}
 
@@ -74,6 +77,11 @@ public:
 	{
 
 	}
+	void AxisCamera()
+	{
+		frame = imaqCreateImage(IMAQ_IMAGE_RGB, 0);
+	}
+
 
 
 private:
