@@ -31,6 +31,8 @@ class Robot: public SampleRobot
 	//VictorSP leftB;
 	VictorSP rightA;
 	//VictorSP rightB;
+	bool ballin; //used to enable/disable the ball handler automatically
+
 
 	//AxisCamera vision;
 	//LiveWindow *lw;
@@ -42,14 +44,16 @@ class Robot: public SampleRobot
 
 
 public:
-	Robot() : chassis(LEFT_MOTOR_ID, RIGHT_MOTOR_ID), driveforward(true),
+	Robot() : chassis(LEFT_MOTOR_ID, RIGHT_MOTOR_ID),
 		leftstick(LEFT_JOYSTICK_PORT),
 		rightstick(RIGHT_JOYSTICK_PORT),	// these must be initialized in the same order
+		driveforward(true),
 		leftencoder(LEFT_CHANNEL_A, LEFT_CHANNEL_B),
 		rightencoder(RIGHT_CHANNEL_A, RIGHT_CHANNEL_B),
 		leftA(LEFT_MOTOR_ID),
-		rightA(RIGHT_MOTOR_ID)	{
-			chassis.SetExpiration(0.1);
+		rightA(RIGHT_MOTOR_ID),
+		ballin(BALL_SENSOR){
+		chassis.SetExpiration(0.1);
 	}
 
 
@@ -68,7 +72,13 @@ public:
 
 	}
 
+	void ball(bool ballin)  //controls the Ball Handler
+	{
+		if(ballin == true) //turns off BALLL_HANDLER_MOTOR when ball is detected
+		{
 
+		}
+	}
 	void setDriveSpeed()
 	{
 		float leftstickvalue = -getJoystickTransform(leftstick.GetY());
@@ -84,7 +94,10 @@ public:
 	{
 		return input;
 	}
+	void Autonomous()
+	{
 
+	}
 
 /*
 private:
