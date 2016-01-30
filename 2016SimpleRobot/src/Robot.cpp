@@ -42,8 +42,7 @@ class Robot: public SampleRobot
 
 
 public:
-	Robot() :
-		chassis(LEFT_MOTOR_ID, RIGHT_MOTOR_ID),
+	Robot() : chassis(LEFT_MOTOR_ID, RIGHT_MOTOR_ID), driveforward(true),
 		leftstick(LEFT_JOYSTICK_PORT),
 		rightstick(RIGHT_JOYSTICK_PORT),	// these must be initialized in the same order
 		leftencoder(LEFT_CHANNEL_A, LEFT_CHANNEL_B),
@@ -83,7 +82,7 @@ public:
 
 	float getJoystickTransform(float input)
 	{
-			return input;
+		return input;
 	}
 
 
@@ -123,4 +122,5 @@ private:
 
 */
 };
-START_ROBOT_CLASS(Robot);
+
+//START_ROBOT_CLASS(Robot);
