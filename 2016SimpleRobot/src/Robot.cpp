@@ -15,7 +15,7 @@ const int TEST_MOTOR_ID_2 = 0;
 const int BALL_HANDLER_MOTOR = 11;
 const int BALL_SENSOR = 12;
 const int LIFT_MOTOR = 13;
-const int IFLIFT = 14;
+const bool IFLIFT = true;
 
 
 
@@ -74,19 +74,6 @@ public:
 
 		}
 
-
-	}
-
-	void ball(bool ballin)  //controls the Ball Handler
-	{
-		if(ballin == true) //turns off BALLL_HANDLER_MOTOR when ball is detected
-		{
-
-		}
-
-	}
-	void lift(rightstick.GetRawButton() == true)
-	{
 
 	}
 
@@ -151,4 +138,4 @@ private:
 */
 };
 
-//START_ROBOT_CLASS(Robot);
+START_ROBOT_CLASS(Robot);
