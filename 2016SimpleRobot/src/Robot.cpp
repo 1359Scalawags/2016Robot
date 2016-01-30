@@ -14,6 +14,9 @@ const int TEST_MOTOR_ID_1 = 9;
 const int TEST_MOTOR_ID_2 = 0;
 const int BALL_HANDLER_MOTOR = 11;
 const int BALL_SENSOR = 12;
+const int LIFT_MOTOR = 13;
+const int IFLIFT = 14;
+
 
 
 
@@ -32,15 +35,16 @@ class Robot: public SampleRobot
 	VictorSP rightA;
 	//VictorSP rightB;
 	bool ballin; //used to enable/disable the ball handler automatically
-
+	VictorSP lift;
+	bool iflift;
 
 	//AxisCamera vision;
 	//LiveWindow *lw;
 	//int autoLoopCounter;
 	//IMAQdxSession session;
-		//Image *frame;
-		//IMAQdxError imaqError;
-		//std::unique_ptr<AxisCamera> camera;
+	//Image *frame;
+	//IMAQdxError imaqError;
+	//std::unique_ptr<AxisCamera> camera;
 
 
 public:
@@ -52,11 +56,12 @@ public:
 		rightencoder(RIGHT_CHANNEL_A, RIGHT_CHANNEL_B),
 		leftA(LEFT_MOTOR_ID),
 		rightA(RIGHT_MOTOR_ID),
-		ballin(BALL_SENSOR){
+		ballin(BALL_SENSOR),
+		lift(LIFT_MOTOR),
+		iflift(IFLIFT)
+		{
 		chassis.SetExpiration(0.1);
-	}
-
-
+		}
 
 	void OperatorControl()
 	{
@@ -78,7 +83,13 @@ public:
 		{
 
 		}
+
 	}
+	void lift(rightstick.GetRawButton() == true)
+	{
+
+	}
+
 	void setDriveSpeed()
 	{
 		float leftstickvalue = -getJoystickTransform(leftstick.GetY());
@@ -94,9 +105,13 @@ public:
 	{
 		return input;
 	}
+
 	void Autonomous()
 	{
+		while(IsAutonomous() && IsEnabled())
+		{
 
+		}
 	}
 
 /*
