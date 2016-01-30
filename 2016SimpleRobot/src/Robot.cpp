@@ -1,25 +1,7 @@
 #include "WPILib.h"
 #include <VictorSP.h>
 //#include <AxisCamera.h>
-
-const int LEFT_MOTOR_ID = 1;
-const int RIGHT_MOTOR_ID = 2;
-const int RIGHT_CHANNEL_A = 3;
-const int RIGHT_CHANNEL_B = 4;
-const int LEFT_CHANNEL_A = 5;
-const int LEFT_CHANNEL_B = 6;
-const int LEFT_JOYSTICK_PORT = 7;
-const int RIGHT_JOYSTICK_PORT = 8;
-const int TEST_MOTOR_ID_1 = 9;
-const int TEST_MOTOR_ID_2 = 0;
-const int BALL_HANDLER_MOTOR = 11;
-const int BALL_SENSOR = 12;
-const int LIFT_MOTOR = 13;
-const bool IFLIFT = true;
-
-
-
-
+#include <Constants.h>
 
 class Robot: public SampleRobot
 {
@@ -34,9 +16,11 @@ class Robot: public SampleRobot
 	//VictorSP leftB;
 	VictorSP rightA;
 	//VictorSP rightB;
-	bool ballin; //used to enable/disable the ball handler automatically
-	VictorSP lift;
+
+
 	bool iflift;
+	LiveWindow *lw;
+	int autoLoopCounter;
 
 	//AxisCamera vision;
 	//LiveWindow *lw;
@@ -50,15 +34,17 @@ class Robot: public SampleRobot
 public:
 	Robot() : chassis(LEFT_MOTOR_ID, RIGHT_MOTOR_ID),
 		leftstick(LEFT_JOYSTICK_PORT),
-		rightstick(RIGHT_JOYSTICK_PORT),	// these must be initialized in the same order
+		rightstick(RIGHT_JOYSTICK_PORT),
 		driveforward(true),
 		leftencoder(LEFT_CHANNEL_A, LEFT_CHANNEL_B),
 		rightencoder(RIGHT_CHANNEL_A, RIGHT_CHANNEL_B),
 		leftA(LEFT_MOTOR_ID),
 		rightA(RIGHT_MOTOR_ID),
 		ballin(BALL_SENSOR),
-		lift(LIFT_MOTOR),
-		iflift(IFLIFT)
+
+		iflift(IFLIFT),
+		lw(NULL),
+		autoLoopCounter(0)
 		{
 		chassis.SetExpiration(0.1);
 		}
@@ -92,6 +78,11 @@ public:
 	{
 		return input;
 	}
+
+	void RobotInit()
+		{
+			lw = LiveWindow::GetInstance();
+		}
 
 	void Autonomous()
 	{
