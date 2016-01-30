@@ -1,24 +1,24 @@
 #include "WPILib.h"
 #include <VictorSP.h>
-#include <AxisCamera.h>
+//#include <AxisCamera.h>
 
-const int LEFT_MOTOR_ID = NULL;
-const int RIGHT_MOTOR_ID = NULL;
-const int RIGHT_CHANNEL_A = NULL;
-const int RIGHT_CHANNEL_B = NULL;
-const int LEFT_CHANNEL_A = NULL;
-const int LEFT_CHANNEL_B = NULL;
-const int LEFT_JOYSTICK_PORT = NULL;
-const int RIGHT_JOYSTICK_PORT = NULL;
-const int TEST_MOTOR_ID_1 = NULL;
-const int TEST_MOTOR_ID_2 = NULL;
-const int BALL_HANDLER_MOTOR = NULL;
-const int BALL_SENSOR = NULL;
-
-
+const int LEFT_MOTOR_ID = 1;
+const int RIGHT_MOTOR_ID = 2;
+const int RIGHT_CHANNEL_A = 3;
+const int RIGHT_CHANNEL_B = 4;
+const int LEFT_CHANNEL_A = 5;
+const int LEFT_CHANNEL_B = 6;
+const int LEFT_JOYSTICK_PORT = 7;
+const int RIGHT_JOYSTICK_PORT = 8;
+const int TEST_MOTOR_ID_1 = 9;
+const int TEST_MOTOR_ID_2 = 0;
+const int BALL_HANDLER_MOTOR = 11;
+const int BALL_SENSOR = 12;
 
 
-class Robot: public IterativeRobot
+
+
+class Robot: public SampleRobot
 {
 
 	RobotDrive chassis; // robot drive system
@@ -28,12 +28,18 @@ class Robot: public IterativeRobot
 	Encoder leftencoder;
 	Encoder rightencoder;
 	VictorSP leftA;
-	VictorSP leftB;
+	//VictorSP leftB;
 	VictorSP rightA;
-	VictorSP rightB;
-	AxisCamera camera;
-	LiveWindow *lw;
-	int autoLoopCounter;
+	//VictorSP rightB;
+
+	//AxisCamera vision;
+	//LiveWindow *lw;
+	//int autoLoopCounter;
+	//IMAQdxSession session;
+		//Image *frame;
+		//IMAQdxError imaqError;
+		//std::unique_ptr<AxisCamera> camera;
+
 
 public:
 	Robot() :
@@ -42,13 +48,13 @@ public:
 		rightstick(RIGHT_JOYSTICK_PORT),	// these must be initialized in the same order
 		leftencoder(LEFT_CHANNEL_A, LEFT_CHANNEL_B),
 		rightencoder(RIGHT_CHANNEL_A, RIGHT_CHANNEL_B),
-
-
-		lw(LiveWindow::GetInstance()),
-		autoLoopCounter(0)
-	{
-		chassis.SetExpiration(0.1);
+		leftA(LEFT_MOTOR_ID),
+		rightA(RIGHT_MOTOR_ID)	{
+			chassis.SetExpiration(0.1);
 	}
+
+
+
 	void OperatorControl()
 	{
 		chassis.SetSafetyEnabled(true);
@@ -60,7 +66,9 @@ public:
 
 		}
 
+
 	}
+
 
 	void setDriveSpeed()
 	{
@@ -73,17 +81,13 @@ public:
 			chassis.TankDrive(-leftstickvalue, -rightstickvalue);
 	}
 
-	void getJoystickTransform(float input)
+	float getJoystickTransform(float input)
 	{
-
-	}
-	void AxisCamera()
-	{
-		frame = imaqCreateImage(IMAQ_IMAGE_RGB, 0);
+			return input;
 	}
 
 
-
+/*
 private:
 	void AutonomousInit()
 	{
@@ -117,5 +121,6 @@ private:
 	}
 };
 
-
-START_ROBOT_CLASS(Robot)
+*/
+};
+START_ROBOT_CLASS(Robot);
