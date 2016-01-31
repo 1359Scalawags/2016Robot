@@ -7,6 +7,7 @@ const int HANDLER_FLIP_UP = 3;
 const int HANDLER_FLIP_DOWN = 2;
 const int HANDLER_BALL_IN = 4;
 const int HANDLER_BALL_OUT = 5;
+const int HANDLER_ON_OFF = 1;
 
 
 class BallHandler
@@ -39,17 +40,24 @@ public:
 
 	}
 
-	void flip()
+	bool flip()
 	{
 		//handler flipper
 		if(ballhandler.GetRawButton(HANDLER_FLIP_UP) == true && flipped != true)
 		{
 			//flip ball handler up only if it is already down
+			flipup();
+			flipped = true;
+
 		}
 		else if(ballhandler.GetRawButton(HANDLER_FLIP_DOWN) == true && flipped != false)
 		{
 			//flip ball handler down only if it is already up
+			flipdown();
+			flipped = false;
+
 		}
+		return flipped;
 	}
 
 	void fire()
@@ -65,5 +73,15 @@ public:
 		{
 			//Allow the ball to be fired only if a ball is present in the Handler
 		}
+	}
+
+	void flipup()
+	{
+		//flip ball handler up only if it is already down
+	}
+
+	void flipdown()
+	{
+		//flip ball handler down only if it is already up
 	}
 };
