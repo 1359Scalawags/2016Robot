@@ -24,7 +24,7 @@ public:
 		liftup(false),
 		liftdown(false)
 	{
-
+		lift.SetInverted(false);
 	}
 
 	void Autonomousupdate()
@@ -37,19 +37,20 @@ public:
 		if(liftbuttons.GetRawButton(LIFT_BUTTON_UP) == true)
 		{
 			//raises tape measure
+			lift.Set(0.9f);
 		}
+		else if(liftbuttons.GetRawButton(LIFT_BUTTON_DOWN) == true)
+		{
+			//lower tape measure
+			lift.Set(-0.9f);
+		}
+
 		else
 		{
-			if(liftbuttons.GetRawButton(LIFT_BUTTON_DOWN) == true)
-			{
-				//lower tape measure
-			}
-
-			else
-			{
-				//turn off tape measure motor
-			}
+			//turn off tape measure motor
+			lift.Set(0);
 		}
+
 
 	}
 };
