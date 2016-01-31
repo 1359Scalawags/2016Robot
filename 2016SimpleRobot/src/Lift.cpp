@@ -27,11 +27,6 @@ public:
 		lift.SetInverted(false);
 	}
 
-	void Autonomousupdate()
-	{
-
-	}
-
 	void update()
 	{
 		if(liftbuttons.GetRawButton(LIFT_BUTTON_UP) == true)

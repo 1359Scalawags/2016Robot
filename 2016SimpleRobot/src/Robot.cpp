@@ -2,6 +2,8 @@
 #include <VictorSP.h>
 //#include <AxisCamera.h>
 #include <Constants.h>
+#include <BallHandler.cpp>
+#include <Lift.cpp>
 
 class Robot: public SampleRobot
 {
@@ -44,8 +46,6 @@ public:
 			Wait(0.005); //wait for motor update time
 
 		}
-
-
 	}
 
 	void setDriveSpeed()
