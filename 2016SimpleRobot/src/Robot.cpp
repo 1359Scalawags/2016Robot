@@ -20,6 +20,8 @@ class Robot: public SampleRobot
 	//VictorSP rightB;
 	LiveWindow *lw;
 	int autoLoopCounter;
+	BallHandler ballhandler;
+	Lift lift;
 
 public:
 	Robot() : chassis(LEFT_MOTOR_ID, RIGHT_MOTOR_ID),
@@ -31,7 +33,9 @@ public:
 		leftA(LEFT_MOTOR_ID),
 		rightA(RIGHT_MOTOR_ID),
 		lw(NULL),
-		autoLoopCounter(0)
+		autoLoopCounter(0),
+		ballhandler(),
+		lift()
 		{
 		chassis.SetExpiration(0.1);
 		}
@@ -40,9 +44,11 @@ public:
 	{
 		chassis.SetSafetyEnabled(true);
 
-		while(IsOperatorControl())
+		while(IsOperatorControl() && IsEnabled())
 		{
 			setDriveSpeed();
+			ballhandler.update();
+			lift.update();
 			Wait(0.005); //wait for motor update time
 
 		}
