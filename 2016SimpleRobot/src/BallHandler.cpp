@@ -17,10 +17,9 @@ public:
 				drive(LIFT_MOTOR),
 				flip(LIFT_FLIP),
 				arm(LIFT_ARM)
-				{
+	{
 
-				}
-
+	}
 
 
 	void Autonomousupdate()

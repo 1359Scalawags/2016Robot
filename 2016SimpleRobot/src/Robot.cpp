@@ -73,7 +73,7 @@ public:
 	{
 		while(IsAutonomous() && IsEnabled())
 		{
-
+			Wait(0.005);
 		}
 	}
 
