@@ -16,20 +16,8 @@ class Robot: public SampleRobot
 	//VictorSP leftB;
 	VictorSP rightA;
 	//VictorSP rightB;
-
-
-	bool iflift;
 	LiveWindow *lw;
 	int autoLoopCounter;
-
-	//AxisCamera vision;
-	//LiveWindow *lw;
-	//int autoLoopCounter;
-	//IMAQdxSession session;
-	//Image *frame;
-	//IMAQdxError imaqError;
-	//std::unique_ptr<AxisCamera> camera;
-
 
 public:
 	Robot() : chassis(LEFT_MOTOR_ID, RIGHT_MOTOR_ID),
@@ -40,9 +28,6 @@ public:
 		rightencoder(RIGHT_CHANNEL_A, RIGHT_CHANNEL_B),
 		leftA(LEFT_MOTOR_ID),
 		rightA(RIGHT_MOTOR_ID),
-		ballin(BALL_SENSOR),
-
-		iflift(IFLIFT),
 		lw(NULL),
 		autoLoopCounter(0)
 		{
@@ -92,41 +77,7 @@ public:
 		}
 	}
 
-/*
-private:
-	void AutonomousInit()
-	{
-		autoLoopCounter = 0;
-	}
 
-	void AutonomousPeriodic()
-	{
-		if(autoLoopCounter < 100) //Check if we've completed 100 loops (approximately 2 seconds)
-		{
-			chassis.Drive(-0.5, 0.0); 	// drive forwards half speed
-			autoLoopCounter++;
-			} else {
-			chassis.Drive(0.0, 0.0); 	// stop robot
-		}
-	}
-
-	void TeleopInit()
-	{
-
-	}
-
-	void TeleopPeriodic()
-	{
-		chassis.TankDrive(leftstick, rightstick); // drive with arcade style (use right stick)
-	}
-
-	void TestPeriodic()
-	{
-		lw->Run();
-	}
-};
-
-*/
 };
 
 START_ROBOT_CLASS(Robot);

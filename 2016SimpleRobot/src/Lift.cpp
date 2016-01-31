@@ -6,13 +6,22 @@
 
 class Lift
 {
+
 private:
 	VictorSP lift;
+	bool iflift;
+	//Servo ratchet;
 
 public:
-	Lift()
+	Lift() : lift(LIFT_MOTOR),
+		iflift(false)
 	{
-		lift = new VictorSP()
+
+	}
+
+	void Autonomousupdate()
+	{
+
 	}
 
 	void update()

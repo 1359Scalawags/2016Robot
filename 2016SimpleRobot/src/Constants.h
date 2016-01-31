@@ -22,6 +22,9 @@ const int BALL_HANDLER_MOTOR = 11;
 const int BALL_SENSOR = 12;
 const int LIFT_MOTOR = 13;
 const bool IFLIFT = true;
+const int LIFT_FLIP = 15;
+const int LIFT_ARM = 16;
+const int SERVO_MOTOR_ID = 17;
 
 
 
