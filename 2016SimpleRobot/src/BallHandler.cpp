@@ -1,6 +1,5 @@
 #include "WPILib.h"
 #include <VictorSP.h>
-//#include <AxisCamera.h>
 #include <Constants.h>
 
 const int HANDLER_FLIP_UP = 3;
@@ -116,7 +115,10 @@ public:
 	void handleron()
 	{
 		//powers on the ballhandler's belts
-		drive.Set(0.75f);
+		if(ballsensor.Get() != true)
+		{
+			drive.Set(0.75f);
+		}
 	}
 	void disablehandler()
 	{
