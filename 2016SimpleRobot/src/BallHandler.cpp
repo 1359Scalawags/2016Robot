@@ -8,8 +8,16 @@ const int HANDLER_BALL_IN = 4;
 const int HANDLER_BALL_OUT = 5;
 const int HANDLER_ON_OFF = 1;
 const int BALLSWITCH = 7;
+const int HANDLER_FLIPPER = 21;
+
+enum BallHandlerState{
+	goingup_off,
+	goingdown_off,
+	down_on,
+	up_off,
 
 
+};
 class BallHandler
 {
 private:
@@ -17,10 +25,12 @@ private:
 	VictorSP drive;
 	VictorSP flipper; //use left joystick for ball handling buttons
 	VictorSP arm;
+	VictorSP handlerflip;
 	Joystick ballhandler;
 	bool flipped = true;
 	DigitalInput ballsensor; //used to enable/disable the ball handler automatically
 	bool switched;
+	bool handler_on_off;
 
 public:
 
@@ -28,9 +38,11 @@ public:
 				drive(LIFT_MOTOR),
 				flipper(LIFT_FLIP),
 				arm(LIFT_ARM),
+				handlerflip(HANDLER_FLIPPER),
 				ballhandler(LEFT_JOYSTICK_PORT),
 				ballsensor(BALLSWITCH),
-				switched(false)
+				switched(false),
+				handler_on_off(false)
 
 	{
 
@@ -105,11 +117,13 @@ public:
 	void flipup()
 	{
 		//flip ball handler up only if it is already down
+		handlerflip.Set(0.75f);
 	}
 
 	void flipdown()
 	{
 		//flip ball handler down only if it is already up
+		handlerflip.Set(-0.75f);
 	}
 
 	void handleron()
