@@ -18,6 +18,8 @@ enum BallHandlerState{
 	down_out_on,
 	down_in_off,
 	up_in_off,
+	folding_in,
+	folding_out
 
 
 };

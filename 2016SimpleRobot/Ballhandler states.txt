@@ -18,4 +18,10 @@ up_if_off
 	Handler flipped up and not spinning 
 	Caused by hitting a button on the right stick or automatically by ball sensor
 
+folding_in
+	handler arm folding in
+	caused by button press
 
+folding_out
+	handler arm folding out
+	caused by a button press
