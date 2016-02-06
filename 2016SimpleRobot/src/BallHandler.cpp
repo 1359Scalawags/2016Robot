@@ -9,6 +9,8 @@ const int HANDLER_BALL_OUT = 5;
 const int HANDLER_ON_OFF = 1;
 const int BALLSWITCH = 7;
 const int HANDLER_FLIPPER = 21;
+const int HANDLER_LIMIT_UP = 23;
+const int HANDLER_LIMIT_DOWN = 24;
 
 enum BallHandlerState{
 	goingup_off,
@@ -32,6 +34,8 @@ private:
 	DigitalInput ballsensor; //used to enable/disable the ball handler automatically
 	bool switched;
 	bool handler_on_off;
+	DigitalInput up_limit;
+	DigitalInput down_limit;
 
 public:
 
@@ -43,8 +47,9 @@ public:
 				ballhandler(LEFT_JOYSTICK_PORT),
 				ballsensor(BALLSWITCH),
 				switched(false),
-				handler_on_off(false)
-
+				handler_on_off(false),
+				up_limit(HANDLER_LIMIT_UP),
+				down_limit(HANDLER_LIMIT_DOWN)
 	{
 
 	}
