@@ -1,14 +1,20 @@
 Ballhandler states 
 
-Going_up 
+going_up 
 	Flipping ball handler up (not spinning)
 	Caused by hitting up button on right stick  
-Going_down
+
+going_down
 	Flipping ball handler down (not spinning) 
 	Caused by hitting down button on the right stick 
-Down_on
-	Handler flipped down and spinning 
-Up_off 
+
+down_out_on
+	Handler flipped down, spinning and out
+
+down_in_off
+	handler flipped down, not spinning and in
+
+up_if_off 
 	Handler flipped up and not spinning 
 	Caused by hitting a button on the right stick or automatically by ball sensor
 

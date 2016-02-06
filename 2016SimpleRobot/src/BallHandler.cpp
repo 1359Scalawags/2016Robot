@@ -13,8 +13,9 @@ const int HANDLER_FLIPPER = 21;
 enum BallHandlerState{
 	goingup_off,
 	goingdown_off,
-	down_on,
-	up_off,
+	down_out_on,
+	down_in_off,
+	up_in_off,
 
 
 };
