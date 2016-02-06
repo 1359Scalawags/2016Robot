@@ -123,13 +123,20 @@ public:
 	void flipup()
 	{
 		//flip ball handler up only if it is already down
-		handlerflip.Set(0.75f);
+		if(up_limit.Get() != true)
+		{
+			handlerflip.Set(0.75f);
+		}
+
 	}
 
 	void flipdown()
 	{
 		//flip ball handler down only if it is already up
-		handlerflip.Set(-0.75f);
+		if(down_limit.Get() != true)
+		{
+			handlerflip.Set(-0.75f);
+		}
 	}
 
 	void handleron()
