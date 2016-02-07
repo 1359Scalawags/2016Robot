@@ -13,15 +13,20 @@ const int HANDLER_LIMIT_UP = 23;
 const int HANDLER_LIMIT_DOWN = 24;
 
 enum BallHandlerState{
-	goingup_off,
-	goingdown_off,
-	down_out_on,
-	down_in_off,
-	up_in_off,
+	goingup_off = 1,
+	goingdown_off = 2,
+	down_on=3,
+	down_off=4,
+	up_off=5
+
+};
+
+enum HandlerArmState
+{
 	folding_in,
-	folding_out
-
-
+	folding_out,
+	in,
+	out
 };
 class BallHandler
 {
@@ -31,14 +36,15 @@ private:
 	VictorSP flipper; //use left joystick for ball handling buttons
 	VictorSP arm;
 	VictorSP handlerflip;
-	Joystick ballhandler;
+	Joystick ballhandlerstick;
 	bool flipped = true;
 	DigitalInput ballsensor; //used to enable/disable the ball handler automatically
 	bool switched;
 	bool handler_on_off;
 	DigitalInput up_limit;
 	DigitalInput down_limit;
-
+	BallHandlerState handlerState;
+	HandlerArmState armState;
 public:
 
 	BallHandler() :
@@ -46,12 +52,14 @@ public:
 				flipper(LIFT_FLIP),
 				arm(LIFT_ARM),
 				handlerflip(HANDLER_FLIPPER),
-				ballhandler(LEFT_JOYSTICK_PORT),
+				ballhandlerstick(LEFT_JOYSTICK_PORT),
 				ballsensor(BALLSWITCH),
 				switched(false),
 				handler_on_off(false),
 				up_limit(HANDLER_LIMIT_UP),
-				down_limit(HANDLER_LIMIT_DOWN)
+				down_limit(HANDLER_LIMIT_DOWN),
+				handlerState(up_off),
+				armState(in)
 	{
 
 	}
@@ -67,14 +75,14 @@ public:
 	bool flip()
 	{
 		//handler flipper
-		if(ballhandler.GetRawButton(HANDLER_FLIP_UP) == true && flipped != true)
+		if(ballhandlerstick.GetRawButton(HANDLER_FLIP_UP) == true && flipped != true)
 		{
 			//flip ball handler up only if it is already down
 			flipup();
 			flipped = true;
 
 		}
-		else if(ballhandler.GetRawButton(HANDLER_FLIP_DOWN) == true && flipped != false)
+		else if(ballhandlerstick.GetRawButton(HANDLER_FLIP_DOWN) == true && flipped != false)
 		{
 			//flip ball handler down only if it is already up
 			flipdown();
@@ -86,14 +94,14 @@ public:
 
 	void enableHandlerDrive()
 	{
-		if(ballhandler.GetRawButton(HANDLER_ON_OFF) == true && flipped == false)
+		if(ballhandlerstick.GetRawButton(HANDLER_ON_OFF) == true && flipped == false)
 		{
 			//if ballhandler is enabled while flipped up it will automatically flip down
 			flipdown();
 			handleron();
 
 		}
-		else if(ballhandler.GetRawButton(HANDLER_ON_OFF) == true && flipped == true)
+		else if(ballhandlerstick.GetRawButton(HANDLER_ON_OFF) == true && flipped == true)
 		{
 			handleron();
 		}
@@ -103,7 +111,7 @@ public:
 	{
 
 		//control ball firing
-		if(ballhandler.GetRawButton(HANDLER_BALL_IN) == true && ballsensor.Get() == false)
+		if(ballhandlerstick.GetRawButton(HANDLER_BALL_IN) == true && ballsensor.Get() == false)
 		{
 			//Allow the Handler to be turned on to take a ball in
 
@@ -112,7 +120,7 @@ public:
 			disablehandler();
 		}
 
-		else if(ballhandler.GetRawButton(HANDLER_BALL_OUT) && ballsensor.Get() == true)
+		else if(ballhandlerstick.GetRawButton(HANDLER_BALL_OUT) && ballsensor.Get() == true)
 		{
 			//Allow the ball to be fired only if a ball is present in the Handler
 			if(ballsensor.Get() == true)
@@ -149,6 +157,7 @@ public:
 			drive.Set(0.75f);
 		}
 	}
+
 	void disablehandler()
 	{
 		//Disables the ballhandler when a ball is present
@@ -156,5 +165,21 @@ public:
 		{
 			drive.Set(0);
 		}
+	}
+
+	void processUserInput()
+	{
+
+		switch(handlerState)
+		{
+		case BallHandlerState.up_off :
+			if(ballhandlerstick.Get(HANDLER_FLIP_DOWN) == true)
+			{
+
+			}
+			break;
+		}
+
+
 	}
 };
