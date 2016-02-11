@@ -11,6 +11,9 @@ const int BALLSWITCH = 7;
 const int HANDLER_FLIPPER = 21;
 const int HANDLER_LIMIT_UP = 23;
 const int HANDLER_LIMIT_DOWN = 24;
+const int HANDLER_GRAB = 2;
+const int HANDLER_UP_BUTTON = 3;
+const int HANDLER_IN_BUTTON = 4;
 
 enum BallHandlerState{
 	goingup_off = 1,
@@ -178,13 +181,17 @@ public:
 //			{
 //
 //			}
-//			break;
+//			bre
 //		}
 
 		if(handlerState == BallHandlerState::up_off)
 		{
-
-		} else if(handlerState == BallHandlerState::down_off)
+			if(ballhandlerstick.GetRawButton(HANDLER_GRAB)  == true)
+			{
+				handlerState = BallHandlerState::down_on;
+				armState = HandlerArmState::folding_out;
+			}
+		}else if(handlerState == BallHandlerState::down_off)
 		{
 
 		}else if(handlerState == BallHandlerState::down_on)
