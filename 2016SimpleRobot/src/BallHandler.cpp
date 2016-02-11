@@ -15,11 +15,12 @@ const int HANDLER_LIMIT_DOWN = 24;
 enum BallHandlerState{
 	goingup_off = 1,
 	goingdown_off = 2,
-	down_on=3,
-	down_off=4,
-	up_off=5
+	down_on = 3,
+	down_off = 4,
+	up_off = 5
 
 };
+
 
 enum HandlerArmState
 {
@@ -170,14 +171,31 @@ public:
 	void processUserInput()
 	{
 
-		switch(handlerState)
-		{
-		case BallHandlerState.up_off :
-			if(ballhandlerstick.Get(HANDLER_FLIP_DOWN) == true)
-			{
+//		switch((int)handlerState)
+//		{
+//		case BallHandlerState::up_off:
+//			if(ballhandlerstick.Get(HANDLER_FLIP_DOWN) == true)
+//			{
+//
+//			}
+//			break;
+//		}
 
-			}
-			break;
+		if(handlerState == BallHandlerState::up_off)
+		{
+
+		} else if(handlerState == BallHandlerState::down_off)
+		{
+
+		}else if(handlerState == BallHandlerState::down_on)
+		{
+
+		}else if(handlerState == BallHandlerState::goingdown_off)
+		{
+
+		}else if(handlerState == BallHandlerState::goingup_off)
+		{
+
 		}
 
 
