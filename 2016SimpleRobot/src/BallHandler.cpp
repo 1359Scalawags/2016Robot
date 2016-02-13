@@ -261,26 +261,45 @@ public:
 		}
 	}
 
-	void setMotors()
+	void setDriveMotors()
 	{
 		if(handlerState == BallHandlerState::up_off)
 		{
 			drive.Set(0);
-			handlerflip.Set(0);
+
 		}
 		else if(handlerState == BallHandlerState::down_on)
 		{
 			drive.Set(0.75f);
-			handlerflip.Set(0);
+
 		}
 		else if(handlerState == BallHandlerState::goingdown_off)
 		{
 			drive.Set(0);
-			handlerflip.Set(-0.75f);
 		}
 		else if(handlerState == BallHandlerState::goingup_off)
 		{
 			drive.Set(0);
+
+		}
+	}
+
+	void setFlipMotor()
+	{
+		if(handlerState == BallHandlerState::up_off)
+		{
+			handlerflip.Set(0);
+		}
+		else if(handlerState == BallHandlerState::down_on)
+		{
+			handlerflip.Set(0);
+		}
+		else if(handlerState == BallHandlerState::goingdown_off)
+		{
+			handlerflip.Set(-0.75f);
+		}
+		else if(handlerState == BallHandlerState::goingup_off)
+		{
 			handlerflip.Set(0.75f);
 		}
 	}
