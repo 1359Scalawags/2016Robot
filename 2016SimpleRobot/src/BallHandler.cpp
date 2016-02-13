@@ -17,6 +17,8 @@ const int HANDLER_IN_BUTTON = 4;
 const int ARM_LIMIT_OUT = 18;
 const int ARM_LIMIT_IN = 19;
 const int ARM_DRIVE_MOTOR = 23;
+const int ARM_OUT_BUTTON = 33;
+const int ARM_IN_BUTTON = 34;
 
 enum BallHandlerState{
 	goingup_off = 1,
@@ -40,9 +42,9 @@ class BallHandler
 private:
 
 	VictorSP drive;
-	VictorSP flipper; //use left joystick for ball handling buttons
+	VictorSP flipper; //flips arm
 	VictorSP arm;
-	VictorSP handlerflip;
+	VictorSP handlerflip; //flips handler
 	VictorSP spinmotor;
 	Joystick ballhandlerstick;
 	bool flipped = true;
@@ -252,15 +254,33 @@ public:
 	//if else tree for ArmState
 		if(armState == HandlerArmState::folding_out)
 		{
-			if(in_limit.Get() == true)
-			{
-				armState = HandlerArmState::in;
-			}
-			else if(out_limit.Get() == true)
+
+			if(out_limit.Get() == true)
 			{
 				armState = HandlerArmState::out;
 			}
 
+		}
+		else if(armState == HandlerArmState::folding_in)
+		{
+			if(in_limit.Get() == true)
+			{
+				armState = HandlerArmState::in;
+			}
+		}
+		else if(armState == HandlerArmState::out)
+		{
+			if(handlerState == BallHandlerState::goingdown_off)
+			{
+				armState = HandlerArmState::folding_out;
+			}
+		}
+		else if(armState == HandlerArmState::in)
+		{
+			if(handlerState == BallHandlerState::goingup_off)
+			{
+				armState = HandlerArmState::folding_in;
+			}
 		}
 	}
 
