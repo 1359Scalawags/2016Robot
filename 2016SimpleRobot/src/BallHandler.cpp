@@ -16,6 +16,7 @@ const int HANDLER_UP_BUTTON = 3;
 const int HANDLER_IN_BUTTON = 4;
 const int ARM_LIMIT_OUT = 18;
 const int ARM_LIMIT_IN = 19;
+const int ARM_DRIVE_MOTOR = 23;
 
 enum BallHandlerState{
 	goingup_off = 1,
@@ -42,6 +43,7 @@ private:
 	VictorSP flipper; //use left joystick for ball handling buttons
 	VictorSP arm;
 	VictorSP handlerflip;
+	VictorSP armdrivemotor;
 	Joystick ballhandlerstick;
 	bool flipped = true;
 	DigitalInput ballsensor; //used to enable/disable the ball handler automatically
@@ -60,6 +62,7 @@ public:
 				flipper(LIFT_FLIP),
 				arm(LIFT_ARM),
 				handlerflip(HANDLER_FLIPPER),
+				armdrivemotor(ARM_DRIVE_MOTOR),
 				ballhandlerstick(LEFT_JOYSTICK_PORT),
 				ballsensor(BALLSWITCH),
 				switched(false),
@@ -280,7 +283,6 @@ public:
 		else if(handlerState == BallHandlerState::goingup_off)
 		{
 			drive.Set(0);
-
 		}
 	}
 
@@ -289,18 +291,22 @@ public:
 		if(handlerState == BallHandlerState::up_off)
 		{
 			handlerflip.Set(0);
+			armdrivemotor.Set(0);
 		}
 		else if(handlerState == BallHandlerState::down_on)
 		{
 			handlerflip.Set(0);
+			armdrivemotor.Set(0);
 		}
 		else if(handlerState == BallHandlerState::goingdown_off)
 		{
 			handlerflip.Set(-0.75f);
+			armdrivemotor.Set(0.75f);
 		}
 		else if(handlerState == BallHandlerState::goingup_off)
 		{
 			handlerflip.Set(0.75f);
+			armdrivemotor.Set(-0.75f);
 		}
 	}
 };
