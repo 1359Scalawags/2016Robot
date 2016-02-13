@@ -43,7 +43,7 @@ private:
 	VictorSP flipper; //use left joystick for ball handling buttons
 	VictorSP arm;
 	VictorSP handlerflip;
-	VictorSP armdrivemotor;
+	VictorSP spinmotor;
 	Joystick ballhandlerstick;
 	bool flipped = true;
 	DigitalInput ballsensor; //used to enable/disable the ball handler automatically
@@ -62,7 +62,7 @@ public:
 				flipper(LIFT_FLIP),
 				arm(LIFT_ARM),
 				handlerflip(HANDLER_FLIPPER),
-				armdrivemotor(ARM_DRIVE_MOTOR),
+				spinmotor(SPIN_MOTOR),
 				ballhandlerstick(LEFT_JOYSTICK_PORT),
 				ballsensor(BALLSWITCH),
 				switched(false),
@@ -291,22 +291,22 @@ public:
 		if(handlerState == BallHandlerState::up_off)
 		{
 			handlerflip.Set(0);
-			armdrivemotor.Set(0);
+			spinmotor.Set(0);
 		}
 		else if(handlerState == BallHandlerState::down_on)
 		{
 			handlerflip.Set(0);
-			armdrivemotor.Set(0);
+			spinmotor.Set(0);
 		}
 		else if(handlerState == BallHandlerState::goingdown_off)
 		{
 			handlerflip.Set(-0.75f);
-			armdrivemotor.Set(0.75f);
+			spinmotor.Set(0.75f);
 		}
 		else if(handlerState == BallHandlerState::goingup_off)
 		{
 			handlerflip.Set(0.75f);
-			armdrivemotor.Set(-0.75f);
+			spinmotor.Set(-0.75f);
 		}
 	}
 };
