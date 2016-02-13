@@ -77,6 +77,7 @@ public:
 	void update()
 	{
 
+		processHandlerState();
 		flip(); //controls flipping
 		fire(); //controls firing
 
@@ -197,19 +198,22 @@ public:
 				handlerState = BallHandlerState::goingdown_off;
 				armState = HandlerArmState::folding_out;
 			}
-		}else if(handlerState == BallHandlerState::down_off)
+		}
+		else if(handlerState == BallHandlerState::down_off)
 		{
 			//should never happen
 			handlerState =  BallHandlerState::down_on;
 			armState = HandlerArmState::folding_out; //may need changed
-		}else if(handlerState == BallHandlerState::down_on)
+		}
+		else if(handlerState == BallHandlerState::down_on)
 		{
 			if(ballhandlerstick.GetRawButton(HANDLER_UP_BUTTON) == true || ballsensor.Get() == true)
 			{
 				handlerState =  BallHandlerState::goingup_off;
 				armState = HandlerArmState::folding_in;
 			}
-		}else if(handlerState == BallHandlerState::goingdown_off)
+		}
+		else if(handlerState == BallHandlerState::goingdown_off)
 		{
 			if(ballhandlerstick.GetRawButton(HANDLER_UP_BUTTON) == true)
 			{
@@ -236,6 +240,7 @@ public:
 			}
 		}
 
+		processArmState();
 
 
 	}
