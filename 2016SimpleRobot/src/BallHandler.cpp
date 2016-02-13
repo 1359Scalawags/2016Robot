@@ -19,6 +19,7 @@ const int ARM_LIMIT_IN = 19;
 const int ARM_DRIVE_MOTOR = 23;
 const int ARM_OUT_BUTTON = 33;
 const int ARM_IN_BUTTON = 34;
+const int SPIN_MOTOR = 35;
 
 enum BallHandlerState{
 	goingup_off = 1,
@@ -130,8 +131,6 @@ public:
 		if(ballhandlerstick.GetRawButton(HANDLER_BALL_IN) == true && ballsensor.Get() == false)
 		{
 			//Allow the Handler to be turned on to take a ball in
-
-
 
 			disablehandler();
 		}
@@ -254,12 +253,10 @@ public:
 	//if else tree for ArmState
 		if(armState == HandlerArmState::folding_out)
 		{
-
 			if(out_limit.Get() == true)
 			{
 				armState = HandlerArmState::out;
 			}
-
 		}
 		else if(armState == HandlerArmState::folding_in)
 		{
@@ -268,20 +265,7 @@ public:
 				armState = HandlerArmState::in;
 			}
 		}
-		else if(armState == HandlerArmState::out)
-		{
-			if(handlerState == BallHandlerState::goingdown_off)
-			{
-				armState = HandlerArmState::folding_out;
-			}
-		}
-		else if(armState == HandlerArmState::in)
-		{
-			if(handlerState == BallHandlerState::goingup_off)
-			{
-				armState = HandlerArmState::folding_in;
-			}
-		}
+
 	}
 
 	void setDriveMotors()
@@ -289,12 +273,10 @@ public:
 		if(handlerState == BallHandlerState::up_off)
 		{
 			drive.Set(0);
-
 		}
 		else if(handlerState == BallHandlerState::down_on)
 		{
 			drive.Set(0.75f);
-
 		}
 		else if(handlerState == BallHandlerState::goingdown_off)
 		{
@@ -308,6 +290,8 @@ public:
 
 	void setFlipMotor()
 	{
+
+		//set motors based on state
 		if(handlerState == BallHandlerState::up_off)
 		{
 			handlerflip.Set(0);
@@ -317,16 +301,21 @@ public:
 		{
 			handlerflip.Set(0);
 			spinmotor.Set(0);
+
 		}
 		else if(handlerState == BallHandlerState::goingdown_off)
 		{
 			handlerflip.Set(-0.75f);
 			spinmotor.Set(0.75f);
+			flipper.Set(-0.75f);
 		}
 		else if(handlerState == BallHandlerState::goingup_off)
 		{
 			handlerflip.Set(0.75f);
 			spinmotor.Set(-0.75f);
+			flipper.Set(0.75f);
 		}
+
+
 	}
 };
