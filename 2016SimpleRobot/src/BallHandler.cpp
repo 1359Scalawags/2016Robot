@@ -193,16 +193,30 @@ public:
 			}
 		}else if(handlerState == BallHandlerState::down_off)
 		{
-
+			handlerState =  BallHandlerState::down_on;
+			armState = HandlerArmState::folding_out;
 		}else if(handlerState == BallHandlerState::down_on)
 		{
-
+			if(ballhandlerstick.GetRawButton(HANDLER_GRAB) == true)
+			{
+				handlerState = BallHandlerState::down_on;
+				armState = HandlerArmState::folding_out;
+			}
 		}else if(handlerState == BallHandlerState::goingdown_off)
 		{
+			if(ballhandlerstick.GetRawButton(HANDLER_UP_BUTTON) == true)
+			{
+				handlerState = BallHandlerState::goingup_off;
+				armState = HandlerArmState::folding_in;
+			}
 
 		}else if(handlerState == BallHandlerState::goingup_off)
 		{
-
+			if(ballhandlerstick.GetRawButton(HANDLER_GRAB) == true)
+			{
+				handlerState = BallHandlerState::down_on;
+				armState = HandlerArmState::folding_out;
+			}
 		}
 
 
