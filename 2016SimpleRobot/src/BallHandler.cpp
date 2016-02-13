@@ -188,19 +188,20 @@ public:
 		{
 			if(ballhandlerstick.GetRawButton(HANDLER_GRAB)  == true)
 			{
-				handlerState = BallHandlerState::down_on;
+				handlerState = BallHandlerState::goingdown_off;
 				armState = HandlerArmState::folding_out;
 			}
 		}else if(handlerState == BallHandlerState::down_off)
 		{
+			//should never happen
 			handlerState =  BallHandlerState::down_on;
 			armState = HandlerArmState::folding_out;
 		}else if(handlerState == BallHandlerState::down_on)
 		{
-			if(ballhandlerstick.GetRawButton(HANDLER_GRAB) == true)
+			if(ballhandlerstick.GetRawButton(HANDLER_UP_BUTTON) == true || ballsensor.Get() == true)
 			{
-				handlerState = BallHandlerState::down_on;
-				armState = HandlerArmState::folding_out;
+				handlerState =  BallHandlerState::goingup_off;
+				armState = HandlerArmState::folding_in;
 			}
 		}else if(handlerState == BallHandlerState::goingdown_off)
 		{
@@ -209,6 +210,11 @@ public:
 				handlerState = BallHandlerState::goingup_off;
 				armState = HandlerArmState::folding_in;
 			}
+			if(down_limit.Get() == true)
+			{
+				handlerState = BallHandlerState::down_off;
+				armState = HandlerArmState::out;
+			}
 
 		}else if(handlerState == BallHandlerState::goingup_off)
 		{
@@ -216,6 +222,11 @@ public:
 			{
 				handlerState = BallHandlerState::down_on;
 				armState = HandlerArmState::folding_out;
+			}
+			if(up_limit.Get() == true)
+			{
+				handlerState = BallHandlerState::up_off;
+				armState = HandlerArmState::in;
 			}
 		}
 
