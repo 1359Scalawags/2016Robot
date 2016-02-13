@@ -14,6 +14,8 @@ const int HANDLER_LIMIT_DOWN = 24;
 const int HANDLER_GRAB = 2;
 const int HANDLER_UP_BUTTON = 3;
 const int HANDLER_IN_BUTTON = 4;
+const int ARM_LIMIT_OUT = 18;
+const int ARM_LIMIT_IN = 19;
 
 enum BallHandlerState{
 	goingup_off = 1,
@@ -47,6 +49,8 @@ private:
 	bool handler_on_off;
 	DigitalInput up_limit;
 	DigitalInput down_limit;
+	DigitalInput out_limit;
+	DigitalInput in_limit;
 	BallHandlerState handlerState;
 	HandlerArmState armState;
 public:
@@ -62,6 +66,8 @@ public:
 				handler_on_off(false),
 				up_limit(HANDLER_LIMIT_UP),
 				down_limit(HANDLER_LIMIT_DOWN),
+				out_limit(ARM_LIMIT_OUT),
+				in_limit(ARM_LIMIT_IN),
 				handlerState(up_off),
 				armState(in)
 	{
@@ -171,7 +177,7 @@ public:
 		}
 	}
 
-	void processUserInput()
+	void processState()
 	{
 
 //		switch((int)handlerState)
@@ -195,7 +201,7 @@ public:
 		{
 			//should never happen
 			handlerState =  BallHandlerState::down_on;
-			armState = HandlerArmState::folding_out;
+			armState = HandlerArmState::folding_out; //may need changed
 		}else if(handlerState == BallHandlerState::down_on)
 		{
 			if(ballhandlerstick.GetRawButton(HANDLER_UP_BUTTON) == true || ballsensor.Get() == true)
@@ -213,8 +219,9 @@ public:
 			if(down_limit.Get() == true)
 			{
 				handlerState = BallHandlerState::down_off;
-				armState = HandlerArmState::out;
+
 			}
+
 
 		}else if(handlerState == BallHandlerState::goingup_off)
 		{
@@ -226,10 +233,24 @@ public:
 			if(up_limit.Get() == true)
 			{
 				handlerState = BallHandlerState::up_off;
-				armState = HandlerArmState::in;
+				armState = HandlerArmState::folding_in;
 			}
 		}
 
+
+		//if else tree for ArmState
+		if(armState == HandlerArmState::folding_out)
+		{
+			if(in_limit.Get() == true)
+			{
+				armState = HandlerArmState::in;
+			}
+			else if(out_limit.Get() == true)
+			{
+				armState = HandlerArmState::out;
+			}
+
+		}
 
 	}
 };
