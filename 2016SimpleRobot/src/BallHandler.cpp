@@ -177,7 +177,7 @@ public:
 		}
 	}
 
-	void processState()
+	void processHandlerState()
 	{
 
 //		switch((int)handlerState)
@@ -221,9 +221,8 @@ public:
 				handlerState = BallHandlerState::down_off;
 
 			}
-
-
-		}else if(handlerState == BallHandlerState::goingup_off)
+		}
+		else if(handlerState == BallHandlerState::goingup_off)
 		{
 			if(ballhandlerstick.GetRawButton(HANDLER_GRAB) == true)
 			{
@@ -238,7 +237,11 @@ public:
 		}
 
 
-		//if else tree for ArmState
+
+	}
+	void processArmState()
+	{
+	//if else tree for ArmState
 		if(armState == HandlerArmState::folding_out)
 		{
 			if(in_limit.Get() == true)
@@ -251,6 +254,6 @@ public:
 			}
 
 		}
-
 	}
+
 };
