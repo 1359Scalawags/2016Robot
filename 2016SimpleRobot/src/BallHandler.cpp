@@ -22,11 +22,14 @@ const int ARM_IN_BUTTON = 34;
 const int SPIN_MOTOR = 35;
 
 enum BallHandlerState{
+	up_off = 0,
 	goingup_off = 1,
 	goingdown_off = 2,
-	down_on = 3,
-	down_off = 4,
-	up_off = 5
+	down_off = 3,
+	down_in = 4,
+	down_out = 5
+
+
 
 };
 
@@ -206,10 +209,10 @@ public:
 		else if(handlerState == BallHandlerState::down_off)
 		{
 			//should never happen
-			handlerState =  BallHandlerState::down_on;
+			handlerState =  BallHandlerState::down_in;
 			armState = HandlerArmState::folding_out; //may need changed
 		}
-		else if(handlerState == BallHandlerState::down_on)
+		else if(handlerState == BallHandlerState::down_in)
 		{
 			if(ballhandlerstick.GetRawButton(HANDLER_UP_BUTTON) == true || ballsensor.Get() == true)
 			{
@@ -234,7 +237,7 @@ public:
 		{
 			if(ballhandlerstick.GetRawButton(HANDLER_GRAB) == true)
 			{
-				handlerState = BallHandlerState::down_on;
+				handlerState = BallHandlerState::down_in;
 				armState = HandlerArmState::folding_out;
 			}
 			if(up_limit.Get() == true)
@@ -274,9 +277,13 @@ public:
 		{
 			drive.Set(0);
 		}
-		else if(handlerState == BallHandlerState::down_on)
+		else if(handlerState == BallHandlerState::down_in)
 		{
 			drive.Set(0.75f);
+		}
+		else if(handlerState == BallHandlerState::down_out)
+		{
+			drive.Set(-0.75f);
 		}
 		else if(handlerState == BallHandlerState::goingdown_off)
 		{
@@ -297,7 +304,7 @@ public:
 			handlerflip.Set(0);
 			spinmotor.Set(0);
 		}
-		else if(handlerState == BallHandlerState::down_on)
+		else if(handlerState == BallHandlerState::down_in)
 		{
 			handlerflip.Set(0);
 			spinmotor.Set(0);
