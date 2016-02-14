@@ -107,7 +107,8 @@ public:
 		setFlipMotor();
 	}
 
-	bool flip()
+/*
+bool flip()
 	{
 		//handler flipper
 		if(ballhandlerstick.GetRawButton(HANDLER_UP_BUTTON) == true && flipped != true)
@@ -198,11 +199,12 @@ public:
 		}
 	}
 
+	*/
 	void processHandlerState()
 	{
 		if(handlerState == BallHandlerState::up_off)
 		{
-			if(ballhandlerstick.GetRawButton(HANDLER_GRAB)  == true)
+			if(ballhandlerstick.GetRawButton(HANDLER_GRAB) == true)
 			{
 				handlerState = BallHandlerState::goingdown_off;
 				armState = HandlerArmState::folding_out;
