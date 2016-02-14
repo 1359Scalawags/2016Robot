@@ -103,9 +103,8 @@ public:
 	void update()
 	{
 		processHandlerState();
-		flip(); //controls flipping
-		fire(); //controls firing
-
+		setDriveMotors();
+		setFlipMotor();
 	}
 
 	bool flip()
@@ -141,6 +140,7 @@ public:
 			handleron();
 		}
 	}
+
 	void fire()
 	{
 
@@ -200,15 +200,6 @@ public:
 
 	void processHandlerState()
 	{
-//		switch((int)handlerState)
-//		{
-//		case BallHandlerState::up_off:
-//			if(ballhandlerstick.Get(HANDLER_FLIP_DOWN) == true)
-//			{
-//
-//			}
-//			break;
-//		}
 		if(handlerState == BallHandlerState::up_off)
 		{
 			if(ballhandlerstick.GetRawButton(HANDLER_GRAB)  == true)
@@ -302,19 +293,10 @@ public:
 		}
 		else if(handlerState == BallHandlerState::goingdown_off)
 		{
-			//TODO have Helland check this
-			if(down_limit.Get() == true)
-			{
-				handlerState = BallHandlerState::down_in;
-			}
 			drive.Set(0);
 		}
 		else if(handlerState == BallHandlerState::goingup_off)
 		{
-			if(up_limit.Get() == true)
-			{
-				handlerState = BallHandlerState::up_off;
-			}
 			drive.Set(0);
 		}
 	}
