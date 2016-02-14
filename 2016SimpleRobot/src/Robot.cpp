@@ -10,29 +10,29 @@ class Robot: public SampleRobot
 	RobotDrive chassis; // robot drive system
 
 	//joysticks for control
-	Joystick leftstick;
-	Joystick rightstick;
+		Joystick leftstick;
+		Joystick rightstick;
 
 	//controls whether or not the robbot can go forward
-	bool driveforward;
+		bool driveforward;
 
 	//encoders
-	Encoder leftencoder;
-	Encoder rightencoder;
+		Encoder leftencoder;
+		Encoder rightencoder;
 
 	//speed controllers
-	VictorSP leftA;
-	//VictorSP leftB;
-	VictorSP rightA;
-	//VictorSP rightB;
+		VictorSP leftA;
+		//VictorSP leftB;
+		VictorSP rightA;
+		//VictorSP rightB;
 
 	//variables for camera
-	LiveWindow *lw;
-	int autoLoopCounter;
+		LiveWindow *lw;
+		int autoLoopCounter;
 
 	//objects for the other systems on the robot
-	BallHandler ballhandler;
-	Lift lift;
+		BallHandler ballhandler;
+		Lift lift;
 
 public:
 	Robot() : chassis(LEFT_MOTOR_ID, RIGHT_MOTOR_ID),

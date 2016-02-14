@@ -16,8 +16,6 @@
 		const int HANDLER_UP_BUTTON = 3;
 		const int HANDLER_IN_BUTTON = 4;
 		const int HANDLER_DOWN_BUTTON = 2;
-
-
 		const int HANDLER_GRAB = 2; //puts the handler in grab mode
 		const int HANDLER_SHOOT =3; //fires the ball
 
@@ -29,8 +27,6 @@
 
 	//motors for the Handler
 		const int HANDLER_FLIPPER = 21; //this is HandlerFlip
-
-
 
 //constants for Arm
 
@@ -67,11 +63,10 @@ class BallHandler
 {
 private:
 
-	VictorSP drive;
-	VictorSP flipper; //flips arm
-	VictorSP arm;
+	VictorSP drive; //belts for the Handler
+	VictorSP armflipper; //flips the arm
 	VictorSP handlerflip; //flips handler
-	VictorSP spinmotor;
+	VictorSP spinmotor; //spins the arm
 	Joystick ballhandlerstick;
 	bool flipped = true;
 	DigitalInput ballsensor; //used to enable/disable the ball handler automatically
@@ -87,9 +82,8 @@ private:
 public:
 
 	BallHandler() :
-				drive(LIFT_MOTOR),
-				flipper(LIFT_FLIP),
-				arm(LIFT_ARM),
+				drive(BALL_HANDLER_MOTOR),
+				armflipper(HANDLER_FLIPPER),
 				handlerflip(HANDLER_FLIPPER),
 				spinmotor(SPIN_MOTOR),
 				ballhandlerstick(LEFT_JOYSTICK_PORT),
@@ -343,13 +337,13 @@ public:
 		{
 			handlerflip.Set(-0.75f);
 			spinmotor.Set(0);
-			flipper.Set(-0.75f);
+			armflipper.Set(-0.75f);
 		}
 		else if(armState == HandlerArmState::folding_out)
 		{
 			handlerflip.Set(0.75f);
 			spinmotor.Set(-0.75f);
-			flipper.Set(0.75f);
+			armflipper.Set(0.75f);
 		}
 	}
 };
