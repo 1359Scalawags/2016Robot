@@ -2,38 +2,58 @@
 #include <VictorSP.h>
 #include <Constants.h>
 
-const int HANDLER_FLIP_UP = 3;
-const int HANDLER_FLIP_DOWN = 2;
-const int HANDLER_BALL_IN = 4;
-const int HANDLER_BALL_OUT = 5;
-const int HANDLER_ON_OFF = 1;
-const int BALLSWITCH = 7;
-const int HANDLER_FLIPPER = 21;
-const int HANDLER_LIMIT_UP = 23;
-const int HANDLER_LIMIT_DOWN = 24;
-const int HANDLER_GRAB = 2;
-const int HANDLER_SHOOT =3;
-const int HANDLER_UP_BUTTON = 3;
-const int HANDLER_IN_BUTTON = 4;
-const int ARM_LIMIT_OUT = 18;
-const int ARM_LIMIT_IN = 19;
-const int ARM_DRIVE_MOTOR = 23;
-const int ARM_OUT_BUTTON = 33;
-const int ARM_IN_BUTTON = 34;
-const int SPIN_MOTOR = 35;
+//these are the constants specific to this class for global constants look in Constants.h
 
-enum BallHandlerState{
+//constants for Handler
+
+//buttons for Handler
+	//controls the direction of the Handler's belts
+		const int HANDLER_BALL_IN = 4;
+		const int HANDLER_BALL_OUT = 5;
+		const int HANDLER_ON_OFF = 1;
+
+	//buttons for controlling the Handler's position
+		const int HANDLER_UP_BUTTON = 3;
+		const int HANDLER_IN_BUTTON = 4;
+		const int HANDLER_DOWN_BUTTON = 2;
+
+
+		const int HANDLER_GRAB = 2; //puts the handler in grab mode
+		const int HANDLER_SHOOT =3; //fires the ball
+
+	//limit switches
+		const int HANDLER_LIMIT_UP = 23;
+		const int HANDLER_LIMIT_DOWN = 24;
+		const int BALLSWITCH = 7; //this is the BallSensor
+
+
+	//motors for the Handler
+		const int HANDLER_FLIPPER = 21; //this is HandlerFlip
+
+
+
+//constants for Arm
+
+	//limit switches
+		const int ARM_LIMIT_OUT = 18;
+		const int ARM_LIMIT_IN = 19;
+
+	//Motors for the Arm
+		const int SPIN_MOTOR = 35; //the motor the spins the grabber roller
+
+	//Buttons for moving Arm in and out
+		const int ARM_OUT_BUTTON = 4;
+		const int ARM_IN_BUTTON = 5;
+
+enum BallHandlerState
+{
 	up_off = 0,
 	goingup_off = 1,
 	goingdown_off = 2,
 	down_off = 3,
 	down_in = 4,
 	down_out = 5
-
-
-
 };
-
 
 enum HandlerArmState
 {
@@ -42,6 +62,7 @@ enum HandlerArmState
 	in,
 	out
 };
+
 class BallHandler
 {
 private:
@@ -62,6 +83,7 @@ private:
 	DigitalInput in_limit;
 	BallHandlerState handlerState;
 	HandlerArmState armState;
+
 public:
 
 	BallHandler() :
@@ -86,7 +108,6 @@ public:
 
 	void update()
 	{
-
 		processHandlerState();
 		flip(); //controls flipping
 		fire(); //controls firing
@@ -96,14 +117,14 @@ public:
 	bool flip()
 	{
 		//handler flipper
-		if(ballhandlerstick.GetRawButton(HANDLER_FLIP_UP) == true && flipped != true)
+		if(ballhandlerstick.GetRawButton(HANDLER_UP_BUTTON) == true && flipped != true)
 		{
 			//flip ball handler up only if it is already down
 			flipup();
 			flipped = true;
 
 		}
-		else if(ballhandlerstick.GetRawButton(HANDLER_FLIP_DOWN) == true && flipped != false)
+		else if(ballhandlerstick.GetRawButton(HANDLER_DOWN_BUTTON) == true && flipped != false)
 		{
 			//flip ball handler down only if it is already up
 			flipdown();
@@ -120,13 +141,11 @@ public:
 			//if ballhandler is enabled while flipped up it will automatically flip down
 			flipdown();
 			handleron();
-
 		}
 		else if(ballhandlerstick.GetRawButton(HANDLER_ON_OFF) == true && flipped == true)
 		{
 			handleron();
 		}
-
 	}
 	void fire()
 	{
@@ -156,7 +175,6 @@ public:
 		{
 			handlerflip.Set(0.75f);
 		}
-
 	}
 
 	void flipdown()
@@ -188,7 +206,6 @@ public:
 
 	void processHandlerState()
 	{
-
 //		switch((int)handlerState)
 //		{
 //		case BallHandlerState::up_off:
@@ -198,7 +215,6 @@ public:
 //			}
 //			break;
 //		}
-
 		if(handlerState == BallHandlerState::up_off)
 		{
 			if(ballhandlerstick.GetRawButton(HANDLER_GRAB)  == true)
@@ -255,10 +271,7 @@ public:
 				armState = HandlerArmState::folding_in;
 			}
 		}
-
 		processArmState();
-
-
 	}
 	void processArmState()
 	{
@@ -277,7 +290,6 @@ public:
 				armState = HandlerArmState::in;
 			}
 		}
-
 	}
 
 	void setDriveMotors()
@@ -296,7 +308,7 @@ public:
 		}
 		else if(handlerState == BallHandlerState::goingdown_off)
 		{
-			//TODO finish this
+			//TODO have Helland check this
 			if(down_limit.Get() == true)
 			{
 				handlerState = BallHandlerState::down_in;
@@ -315,7 +327,6 @@ public:
 
 	void setFlipMotor()
 	{
-
 		//set motors based on state
 		if(armState == HandlerArmState::in)
 		{
@@ -340,7 +351,5 @@ public:
 			spinmotor.Set(-0.75f);
 			flipper.Set(0.75f);
 		}
-
-
 	}
 };
