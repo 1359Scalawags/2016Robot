@@ -12,6 +12,7 @@ const int HANDLER_FLIPPER = 21;
 const int HANDLER_LIMIT_UP = 23;
 const int HANDLER_LIMIT_DOWN = 24;
 const int HANDLER_GRAB = 2;
+const int HANDLER_SHOOT =3;
 const int HANDLER_UP_BUTTON = 3;
 const int HANDLER_IN_BUTTON = 4;
 const int ARM_LIMIT_OUT = 18;
@@ -195,7 +196,7 @@ public:
 //			{
 //
 //			}
-//			bre
+//			break;
 //		}
 
 		if(handlerState == BallHandlerState::up_off)
@@ -220,6 +221,15 @@ public:
 				armState = HandlerArmState::folding_in;
 			}
 		}
+		else if(handlerState == BallHandlerState::down_out)
+		{
+			if(ballhandlerstick.GetRawButton(HANDLER_SHOOT) == true)
+			{
+
+				handlerState =  BallHandlerState::goingup_off;
+				armState = HandlerArmState::folding_in;
+			}
+		}
 		else if(handlerState == BallHandlerState::goingdown_off)
 		{
 			if(ballhandlerstick.GetRawButton(HANDLER_UP_BUTTON) == true)
@@ -230,7 +240,6 @@ public:
 			if(down_limit.Get() == true)
 			{
 				handlerState = BallHandlerState::down_off;
-
 			}
 		}
 		else if(handlerState == BallHandlerState::goingup_off)
@@ -287,10 +296,19 @@ public:
 		}
 		else if(handlerState == BallHandlerState::goingdown_off)
 		{
+			//TODO finish this
+			if(down_limit.Get() == true)
+			{
+				handlerState = BallHandlerState::down_in;
+			}
 			drive.Set(0);
 		}
 		else if(handlerState == BallHandlerState::goingup_off)
 		{
+			if(up_limit.Get() == true)
+			{
+				handlerState = BallHandlerState::up_off;
+			}
 			drive.Set(0);
 		}
 	}
@@ -299,24 +317,24 @@ public:
 	{
 
 		//set motors based on state
-		if(handlerState == BallHandlerState::up_off)
+		if(armState == HandlerArmState::in)
 		{
 			handlerflip.Set(0);
 			spinmotor.Set(0);
 		}
-		else if(handlerState == BallHandlerState::down_in)
+		else if(armState == HandlerArmState::out)
 		{
 			handlerflip.Set(0);
-			spinmotor.Set(0);
+			spinmotor.Set(0.75f);
 
 		}
-		else if(handlerState == BallHandlerState::goingdown_off)
+		else if(armState == HandlerArmState::folding_in)
 		{
 			handlerflip.Set(-0.75f);
-			spinmotor.Set(0.75f);
+			spinmotor.Set(0);
 			flipper.Set(-0.75f);
 		}
-		else if(handlerState == BallHandlerState::goingup_off)
+		else if(armState == HandlerArmState::folding_out)
 		{
 			handlerflip.Set(0.75f);
 			spinmotor.Set(-0.75f);
