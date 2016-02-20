@@ -43,15 +43,15 @@ public:
 			lift.Set(0.9f);
 		}
 		else if(liftbuttons.GetRawButton(LIFT_BUTTON_DOWN) == true)
-			{
-				//lower tape measure
-				lift.Set(-0.9f);
-			}
-			else
-			{
-				//turn off tape measure motor
-				lift.Set(0);
-			}
+		{
+			//lower tape measure
+			lift.Set(-0.9f);
+		}
+		else
+		{
+			//turn off tape measure motor
+			lift.Set(0);
+		}
 
 
 	}

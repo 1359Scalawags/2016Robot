@@ -22,9 +22,9 @@ class Robot: public SampleRobot
 
 	//speed controllers
 		VictorSP leftA;
-		//VictorSP leftB;
+		VictorSP leftB;
 		VictorSP rightA;
-		//VictorSP rightB;
+		VictorSP rightB;
 
 	//variables for camera
 		LiveWindow *lw;
@@ -35,22 +35,24 @@ class Robot: public SampleRobot
 		Lift lift;
 
 public:
-	Robot() : chassis(LEFT_MOTOR_ID, RIGHT_MOTOR_ID),
+	Robot() : chassis(LEFTA_MOTOR_ID, RIGHTA_MOTOR_ID, LEFTB_MOTOR_ID, RIGHTB_MOTOR_ID),
 		leftstick(LEFT_JOYSTICK_PORT),
 		rightstick(RIGHT_JOYSTICK_PORT),
 		driveforward(true),
 		leftencoder(LEFT_CHANNEL_A, LEFT_CHANNEL_B),
 		rightencoder(RIGHT_CHANNEL_A, RIGHT_CHANNEL_B),
-		leftA(LEFT_MOTOR_ID),
-		rightA(RIGHT_MOTOR_ID),
+		leftA(LEFTA_MOTOR_ID),
+		rightA(RIGHTA_MOTOR_ID),
+		leftB(LEFTB_MOTOR_ID),
+		rightB(RIGHTB_MOTOR_ID),
 		lw(NULL),
 		autoLoopCounter(0),
 		ballhandler(),
 		lift()
 		{
 		chassis.SetExpiration(0.1);
-		leftencoder.SetDistancePerPulse(5);
-		rightencoder.SetDistancePerPulse(5);
+		//leftencoder.SetDistancePerPulse(5);
+		//rightencoder.SetDistancePerPulse(5);
 		}
 
 	void OperatorControl()

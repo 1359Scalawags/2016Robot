@@ -11,8 +11,10 @@
 //constants used in more then one file can be found here
 
 //Drive System motors
-	const int LEFT_MOTOR_ID = 1;
-	const int RIGHT_MOTOR_ID = 2;
+	const int LEFTA_MOTOR_ID = 1;
+	const int RIGHTA_MOTOR_ID = 2;
+	const int LEFTB_MOTOR_ID = 3;
+	const int RIGHTB_MOTOR_ID = 4;
 
 //Speed Controllers for the Drive System
 	const int RIGHT_CHANNEL_A = 3;
