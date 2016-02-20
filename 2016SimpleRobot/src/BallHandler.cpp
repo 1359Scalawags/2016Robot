@@ -200,6 +200,7 @@ bool flip()
 	}
 
 	*/
+
 	void processHandlerState()
 	{
 		if(handlerState == BallHandlerState::up_off)

@@ -49,6 +49,8 @@ public:
 		lift()
 		{
 		chassis.SetExpiration(0.1);
+		leftencoder.SetDistancePerPulse(5);
+		rightencoder.SetDistancePerPulse(5);
 		}
 
 	void OperatorControl()
