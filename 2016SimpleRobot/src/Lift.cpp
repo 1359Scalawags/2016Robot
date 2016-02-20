@@ -2,16 +2,8 @@
 #include <VictorSP.h>
 #include <Constants.h>
 
-//these are the constants specific to this class for global constants look in Constants.h
 
-//buttons to make the Lift go up and down
-	const int LIFT_BUTTON_UP = 3;
-	const int LIFT_BUTTON_DOWN = 2;
 
-//Servo that may be on the lift
-	const int SERVO_MOTOR_ID = 17;
-
-	const bool IFLIFT = true;
 
 
 class Lift
@@ -19,7 +11,7 @@ class Lift
 
 private:
 	Joystick liftbuttons;
-	VictorSP lift;
+	Talon lift;
 	bool iflift;
 	bool liftup;
 	bool liftdown;

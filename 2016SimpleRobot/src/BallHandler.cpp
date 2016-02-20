@@ -2,45 +2,9 @@
 #include <VictorSP.h>
 #include <Constants.h>
 
-//these are the constants specific to this class for global constants look in Constants.h
-
-//constants for Handler
-
-//buttons for Handler
-	//controls the direction of the Handler's belts
-		const int HANDLER_BALL_IN = 4;
-		const int HANDLER_BALL_OUT = 5;
-		const int HANDLER_ON_OFF = 1;
-
-	//buttons for controlling the Handler's position
-		const int HANDLER_UP_BUTTON = 3;
-		const int HANDLER_IN_BUTTON = 4;
-		const int HANDLER_DOWN_BUTTON = 2;
-		const int HANDLER_GRAB = 2; //puts the handler in grab mode
-		const int HANDLER_SHOOT =3; //fires the ball
-
-	//limit switches
-		const int HANDLER_LIMIT_UP = 2;
-		const int HANDLER_LIMIT_DOWN = 1;
-		const int BALLSWITCH = 0; //this is the BallSensor
 
 
-	//motors for the Handler
-		const int HANDLER_POSITION = 0; //this is HandlerFlip
-		const int ARM_POSITION = 1;
 
-//constants for Arm
-
-	//limit switches
-		const int ARM_LIMIT_OUT = 18;
-		const int ARM_LIMIT_IN = 19;
-
-	//Motors for the Arm
-		const int SPIN_MOTOR = 35; //the motor the spins the grabber roller
-
-	//Buttons for moving Arm in and out
-		const int ARM_OUT_BUTTON = 4;
-		const int ARM_IN_BUTTON = 5;
 
 enum BallHandlerState
 {
@@ -64,10 +28,10 @@ class BallHandler
 {
 private:
 
-	VictorSP drive; //belts for the Handler
-	VictorSP armflipper; //flips the arm
-	VictorSP handlerposition; //flips handler
-	VictorSP spinmotor; //spins the arm
+	Relay drive; //belts for the Handler
+	Talon armflipper; //flips the arm
+	Relay handlerposition; //flips handler
+	Talon spinmotor; //spins the arm
 	Joystick ballhandlerstick;
 	bool flipped = true;
 	DigitalInput ballsensor; //used to enable/disable the ball handler automatically
