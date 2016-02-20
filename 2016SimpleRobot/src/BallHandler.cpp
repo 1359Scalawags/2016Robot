@@ -20,13 +20,14 @@
 		const int HANDLER_SHOOT =3; //fires the ball
 
 	//limit switches
-		const int HANDLER_LIMIT_UP = 23;
-		const int HANDLER_LIMIT_DOWN = 24;
-		const int BALLSWITCH = 7; //this is the BallSensor
+		const int HANDLER_LIMIT_UP = 2;
+		const int HANDLER_LIMIT_DOWN = 1;
+		const int BALLSWITCH = 0; //this is the BallSensor
 
 
 	//motors for the Handler
-		const int HANDLER_FLIPPER = 21; //this is HandlerFlip
+		const int HANDLER_POSITION = 0; //this is HandlerFlip
+		const int ARM_POSITION = 1;
 
 //constants for Arm
 
@@ -65,12 +66,12 @@ private:
 
 	VictorSP drive; //belts for the Handler
 	VictorSP armflipper; //flips the arm
-	VictorSP handlerflip; //flips handler
+	VictorSP handlerposition; //flips handler
 	VictorSP spinmotor; //spins the arm
 	Joystick ballhandlerstick;
 	bool flipped = true;
 	DigitalInput ballsensor; //used to enable/disable the ball handler automatically
-	bool switched;
+	//bool switched;
 	bool handler_on_off;
 	DigitalInput up_limit;
 	DigitalInput down_limit;
@@ -83,12 +84,12 @@ public:
 
 	BallHandler() :
 				drive(BALL_HANDLER_MOTOR),
-				armflipper(HANDLER_FLIPPER),
-				handlerflip(HANDLER_FLIPPER),
+				armflipper(ARM_POSITION),
+				handlerposition(HANDLER_POSITION),
 				spinmotor(SPIN_MOTOR),
 				ballhandlerstick(LEFT_JOYSTICK_PORT),
 				ballsensor(BALLSWITCH),
-				switched(false),
+				//switched(false)
 				handler_on_off(false),
 				up_limit(HANDLER_LIMIT_UP),
 				down_limit(HANDLER_LIMIT_DOWN),
@@ -309,24 +310,24 @@ bool flip()
 		//set motors based on state
 		if(armState == HandlerArmState::in)
 		{
-			handlerflip.Set(0);
+			handlerposition.Set(0);
 			spinmotor.Set(0);
 		}
 		else if(armState == HandlerArmState::out)
 		{
-			handlerflip.Set(0);
+			handlerposition.Set(0);
 			spinmotor.Set(0.75f);
 
 		}
 		else if(armState == HandlerArmState::folding_in)
 		{
-			handlerflip.Set(-0.75f);
+			handlerposition.Set(-0.75f);
 			spinmotor.Set(0);
 			armflipper.Set(-0.75f);
 		}
 		else if(armState == HandlerArmState::folding_out)
 		{
-			handlerflip.Set(0.75f);
+			handlerposition.Set(0.75f);
 			spinmotor.Set(-0.75f);
 			armflipper.Set(0.75f);
 		}

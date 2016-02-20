@@ -12,8 +12,8 @@
 
 //Drive System motors
 	const int LEFTA_MOTOR_ID = 1;
-	const int RIGHTA_MOTOR_ID = 2;
-	const int LEFTB_MOTOR_ID = 3;
+	const int RIGHTA_MOTOR_ID = 3;
+	const int LEFTB_MOTOR_ID = 2;
 	const int RIGHTB_MOTOR_ID = 4;
 
 //Speed Controllers for the Drive System
@@ -27,8 +27,8 @@
 	const int RIGHT_JOYSTICK_PORT = 8;
 
 //TODO what are these?
-	const int TEST_MOTOR_ID_1 = 9;
-	const int TEST_MOTOR_ID_2 = 0;
+	//const int TEST_MOTOR_ID_1 = 9;
+	//const int TEST_MOTOR_ID_2 = 0;
 
 //Motors for BallHandler
 	const int BALL_HANDLER_MOTOR = 11;

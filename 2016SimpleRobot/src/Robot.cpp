@@ -62,8 +62,8 @@ public:
 		while(IsOperatorControl() && IsEnabled())
 		{
 			setDriveSpeed();
-			ballhandler.update();
-			lift.update();
+			//ballhandler.update();
+			//lift.update();
 			Wait(0.005); //wait for motor update time
 
 		}
