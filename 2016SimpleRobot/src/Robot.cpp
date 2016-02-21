@@ -75,7 +75,7 @@ public:
 			{
 				setDriveSpeed();
 				ballhandler.update();
-				lift.update();
+				//lift.update();
 			}
 
 			Wait(0.005); //wait for motor update time

@@ -58,7 +58,7 @@ public:
 				down_limit(HANDLER_LIMIT_DOWN),
 				out_limit(ARM_LIMIT_OUT),
 				in_limit(ARM_LIMIT_IN),
-				handlerState(up_off),
+				handlerState(goingup_off),
 				armState(in)
 	{
 
@@ -184,7 +184,7 @@ bool flip()
 		}
 		else if(handlerState == BallHandlerState::down_in)
 		{
-			if(ballhandlerstick.GetRawButton(HANDLER_UP_BUTTON) == true || ballsensor.Get() == true)
+			if(ballhandlerstick.GetRawButton(HANDLER_UP_BUTTON) == true || ballsensor.Get() == PRESSED)
 			{
 				handlerState =  BallHandlerState::goingup_off;
 				armState = HandlerArmState::folding_in;
@@ -206,7 +206,7 @@ bool flip()
 				handlerState = BallHandlerState::goingup_off;
 				armState = HandlerArmState::folding_in;
 			}
-			if(down_limit.Get() == true)
+			if(down_limit.Get() == PRESSED)
 			{
 				handlerState = BallHandlerState::down_off;
 			}
@@ -218,7 +218,7 @@ bool flip()
 				handlerState = BallHandlerState::down_in;
 				armState = HandlerArmState::folding_out;
 			}
-			if(up_limit.Get() == true)
+			if(up_limit.Get() == PRESSED)
 			{
 				handlerState = BallHandlerState::up_off;
 				armState = HandlerArmState::folding_in;
@@ -275,6 +275,12 @@ bool flip()
 		std::string has_string = "Arm: " + HandlerArmStateDescriptions[has];
 		SmartDashboard::PutString("DB/String 1", has_string);
 
+		SmartDashboard::PutString("DB/String 2", boolAsString(ballsensor.Get()));
+
+	}
+
+	inline std::string boolAsString(bool b) {
+		return b ? "true" : "false";
 	}
 
 	void setFlipMotor()
@@ -302,6 +308,12 @@ bool flip()
 			handlerposition.Set(Relay::kForward);
 			spinmotor.Set(-0.75f);
 			armflipper.Set(0.75f);
+		}
+		else {
+			spinmotor.Set(0.0f);
+			armflipper.Set(0.0f);
+			handlerposition.Set(Relay::kOff);
+
 		}
 	}
 

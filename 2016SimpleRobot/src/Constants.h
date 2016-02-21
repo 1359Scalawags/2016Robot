@@ -18,7 +18,15 @@
 	const int RIGHTA_MOTOR_ID = 2;
 	const int RIGHTB_MOTOR_ID = 3;
 
-//Encoders for the Drive System
+//Motors for BallHandler
+	const int BALL_HANDLER_MOTOR = 1; //relay
+
+//Motor for the lift
+	const int LIFT_MOTOR = 6; //Talon
+	const float LIFT_MOTOR_SPEED = 0.1f; //controls speed for LIFT_MOTOR
+
+
+	//Encoders for the Drive System
 	const int RIGHT_CHANNEL_A = 21; //extender board
 	const int RIGHT_CHANNEL_B = 22; //extender board
 	const int LEFT_CHANNEL_A = 23; //extender board
@@ -30,12 +38,6 @@
 	const int TEST_JOYSTICK_PORT = 2;
 
 
-//Motors for BallHandler
-	const int BALL_HANDLER_MOTOR = 1; //relay
-
-//Motor for the lift
-	const int LIFT_MOTOR = 6; //Talon
-	const float LIFT_MOTOR_SPEED = 0.1f; //controls speed for LIFT_MOTOR
 
 
 //buttons to make the Lift go up and down
@@ -90,10 +92,10 @@
 
 const int TEST_MODE_BUTTON = 9;
 
-const bool PRESSED = true;
-const bool NOT_PRESSED = false;
+const bool PRESSED = false;
+const bool NOT_PRESSED = true;
 
-const std::string BallHandlerStateDescriptions[6] = {"Up & Off", "Raise & Off", "Lower & Off", "Down & Off", "Down & In", "Down & Out"};
+const std::string BallHandlerStateDescriptions[] = {"Up & Off", "Raise & Off", "Lower & Off", "Down & Off", "Down & In", "Down & Out"};
 const std::string HandlerArmStateDescriptions[] = {"Folding In", "Folding Out", "In", "Out"};
 
 
