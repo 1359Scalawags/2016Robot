@@ -2,6 +2,8 @@
 #include <VictorSP.h>
 #include <Constants.h>
 
+const String BallHandlerStateDescriptions[] = {"Up & Off", "Raise & Off", "Lower & Off", "Down & Off", "Down & In", "Down & Out"};
+const String HandlerArmStateDescriptions[] = {"Folding In", "Folding Out", "In", "Out"};
 
 enum BallHandlerState
 {
@@ -266,7 +268,8 @@ bool flip()
 		}
 	}
 	void updateDashboard(BallHandlerState bhs, HandlerArmState has) {
-		
+		String bhs_string = "Handler: " + BallHandlerStateDescriptions[bhs];
+		SmartDashboard::PutString("DB/String 0", bhs_string);
 	}
 
 	void setFlipMotor()
