@@ -3,9 +3,6 @@
 #include <Constants.h>
 
 
-
-
-
 enum BallHandlerState
 {
 	up_off = 0,
@@ -249,23 +246,23 @@ bool flip()
 	{
 		if(handlerState == BallHandlerState::up_off)
 		{
-			drive.Set(0);
+			drive.Set(Relay::kOff);
 		}
 		else if(handlerState == BallHandlerState::down_in)
 		{
-			drive.Set(0.75f);
+			drive.Set(Relay::kForward);
 		}
 		else if(handlerState == BallHandlerState::down_out)
 		{
-			drive.Set(-0.75f);
+			drive.Set(Relay::kReverse);
 		}
 		else if(handlerState == BallHandlerState::goingdown_off)
 		{
-			drive.Set(0);
+			drive.Set(Relay::kOff);
 		}
 		else if(handlerState == BallHandlerState::goingup_off)
 		{
-			drive.Set(0);
+			drive.Set(Relay::kOff);
 		}
 	}
 
@@ -274,24 +271,24 @@ bool flip()
 		//set motors based on state
 		if(armState == HandlerArmState::in)
 		{
-			handlerposition.Set(0);
+			handlerposition.Set(Relay::kOff);
 			spinmotor.Set(0);
 		}
 		else if(armState == HandlerArmState::out)
 		{
-			handlerposition.Set(0);
+			handlerposition.Set(Relay::kOff);
 			spinmotor.Set(0.75f);
 
 		}
 		else if(armState == HandlerArmState::folding_in)
 		{
-			handlerposition.Set(-0.75f);
+			handlerposition.Set(Relay::kReverse);
 			spinmotor.Set(0);
 			armflipper.Set(-0.75f);
 		}
 		else if(armState == HandlerArmState::folding_out)
 		{
-			handlerposition.Set(0.75f);
+			handlerposition.Set(Relay::kForward);
 			spinmotor.Set(-0.75f);
 			armflipper.Set(0.75f);
 		}

@@ -3,6 +3,7 @@
 #include <Constants.h>
 #include <BallHandler.cpp>
 #include <Lift.cpp>
+#include <MotorTest.cpp>
 
 class Robot: public SampleRobot
 {
@@ -33,22 +34,27 @@ class Robot: public SampleRobot
 	//objects for the other systems on the robot
 		BallHandler ballhandler;
 		Lift lift;
+		MotorTest test;
+
+		DigitalInput testswitch;
 
 public:
-	Robot() : chassis(LEFTA_MOTOR_ID, RIGHTA_MOTOR_ID, LEFTB_MOTOR_ID, RIGHTB_MOTOR_ID),
+	Robot() : chassis(LEFTA_MOTOR_ID, LEFTB_MOTOR_ID, RIGHTA_MOTOR_ID, RIGHTB_MOTOR_ID),
 		leftstick(LEFT_JOYSTICK_PORT),
 		rightstick(RIGHT_JOYSTICK_PORT),
 		driveforward(true),
 		leftencoder(LEFT_CHANNEL_A, LEFT_CHANNEL_B),
 		rightencoder(RIGHT_CHANNEL_A, RIGHT_CHANNEL_B),
 		leftA(LEFTA_MOTOR_ID),
-		rightA(RIGHTA_MOTOR_ID),
 		leftB(LEFTB_MOTOR_ID),
+		rightA(RIGHTA_MOTOR_ID),
 		rightB(RIGHTB_MOTOR_ID),
 		lw(NULL),
 		autoLoopCounter(0),
 		ballhandler(),
-		lift()
+		lift(),
+		test(),
+		testswitch(TEST_MODE_BUTTON)
 		{
 		chassis.SetExpiration(0.1);
 		//leftencoder.SetDistancePerPulse(5);
@@ -61,9 +67,17 @@ public:
 
 		while(IsOperatorControl() && IsEnabled())
 		{
-			setDriveSpeed();
-			//ballhandler.update();
-			//lift.update();
+			if(testswitch.Get() == true)
+			{
+				test.update();
+			}
+			else
+			{
+				setDriveSpeed();
+				ballhandler.update();
+				lift.update();
+			}
+
 			Wait(0.005); //wait for motor update time
 
 		}

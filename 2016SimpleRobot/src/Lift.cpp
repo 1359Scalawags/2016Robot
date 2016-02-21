@@ -4,8 +4,6 @@
 
 
 
-
-
 class Lift
 {
 
@@ -32,12 +30,12 @@ public:
 		if(liftbuttons.GetRawButton(LIFT_BUTTON_UP) == true)
 		{
 			//raises tape measure
-			lift.Set(0.9f);
+			lift.Set(LIFT_MOTOR_SPEED);
 		}
 		else if(liftbuttons.GetRawButton(LIFT_BUTTON_DOWN) == true)
 		{
 			//lower tape measure
-			lift.Set(-0.9f);
+			lift.Set(-LIFT_MOTOR_SPEED);
 		}
 		else
 		{
