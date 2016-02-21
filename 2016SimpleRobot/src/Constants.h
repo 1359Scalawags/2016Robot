@@ -8,6 +8,8 @@
 #ifndef SRC_CONSTANTS_H_
 #define SRC_CONSTANTS_H_
 
+#include <String>
+
 //constants used in more then one file can be found here
 
 //Drive System motors
@@ -90,6 +92,9 @@ const int TEST_MODE_BUTTON = 9;
 
 const bool PRESSED = true;
 const bool NOT_PRESSED = false;
+
+const std::string BallHandlerStateDescriptions[6] = {"Up & Off", "Raise & Off", "Lower & Off", "Down & Off", "Down & In", "Down & Out"};
+const std::string HandlerArmStateDescriptions[] = {"Folding In", "Folding Out", "In", "Out"};
 
 
 #endif /* SRC_CONSTANTS_H_ */

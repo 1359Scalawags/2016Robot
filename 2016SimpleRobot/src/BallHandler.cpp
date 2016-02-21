@@ -1,9 +1,9 @@
 #include "WPILib.h"
 #include <VictorSP.h>
 #include <Constants.h>
+#include <string>
 
-const String BallHandlerStateDescriptions[] = {"Up & Off", "Raise & Off", "Lower & Off", "Down & Off", "Down & In", "Down & Out"};
-const String HandlerArmStateDescriptions[] = {"Folding In", "Folding Out", "In", "Out"};
+
 
 enum BallHandlerState
 {
@@ -17,10 +17,10 @@ enum BallHandlerState
 
 enum HandlerArmState
 {
-	folding_in,
-	folding_out,
-	in,
-	out
+	folding_in = 0,
+	folding_out = 1,
+	in = 2,
+	out = 3
 };
 
 class BallHandler
@@ -69,6 +69,7 @@ public:
 		processHandlerState();
 		setDriveMotors();
 		setFlipMotor();
+		updateDashboard(handlerState, armState);
 	}
 
 /*
@@ -268,8 +269,12 @@ bool flip()
 		}
 	}
 	void updateDashboard(BallHandlerState bhs, HandlerArmState has) {
-		String bhs_string = "Handler: " + BallHandlerStateDescriptions[bhs];
+		std::string bhs_string = "Ball: " + BallHandlerStateDescriptions[bhs];
 		SmartDashboard::PutString("DB/String 0", bhs_string);
+
+		std::string has_string = "Arm: " + HandlerArmStateDescriptions[has];
+		SmartDashboard::PutString("DB/String 1", has_string);
+
 	}
 
 	void setFlipMotor()
