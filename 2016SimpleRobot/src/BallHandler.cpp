@@ -265,6 +265,9 @@ bool flip()
 			drive.Set(Relay::kOff);
 		}
 	}
+	void updateDashboard(BallHandlerState bhs, HandlerArmState has) {
+		
+	}
 
 	void setFlipMotor()
 	{
