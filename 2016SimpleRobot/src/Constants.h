@@ -88,5 +88,8 @@
 
 const int TEST_MODE_BUTTON = 9;
 
+const bool PRESSED = true;
+const bool NOT_PRESSED = false;
+
 
 #endif /* SRC_CONSTANTS_H_ */

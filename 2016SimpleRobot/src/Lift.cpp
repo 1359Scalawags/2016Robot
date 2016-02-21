@@ -27,12 +27,12 @@ public:
 
 	void update()
 	{
-		if(liftbuttons.GetRawButton(LIFT_BUTTON_UP) == true)
+		if(liftbuttons.GetRawButton(LIFT_BUTTON_UP) == PRESSED)
 		{
 			//raises tape measure
 			lift.Set(LIFT_MOTOR_SPEED);
 		}
-		else if(liftbuttons.GetRawButton(LIFT_BUTTON_DOWN) == true)
+		else if(liftbuttons.GetRawButton(LIFT_BUTTON_DOWN) == PRESSED)
 		{
 			//lower tape measure
 			lift.Set(-LIFT_MOTOR_SPEED);

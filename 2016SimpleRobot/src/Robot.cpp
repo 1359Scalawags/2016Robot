@@ -67,7 +67,7 @@ public:
 
 		while(IsOperatorControl() && IsEnabled())
 		{
-			if(testswitch.Get() == true)
+			if(testswitch.Get() == PRESSED)
 			{
 				test.update();
 			}

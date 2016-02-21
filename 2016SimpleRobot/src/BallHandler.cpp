@@ -228,14 +228,14 @@ bool flip()
 	//if else tree for ArmState
 		if(armState == HandlerArmState::folding_out)
 		{
-			if(out_limit.Get() == true)
+			if(out_limit.Get() == PRESSED)
 			{
 				armState = HandlerArmState::out;
 			}
 		}
 		else if(armState == HandlerArmState::folding_in)
 		{
-			if(in_limit.Get() == true)
+			if(in_limit.Get() == PRESSED)
 			{
 				armState = HandlerArmState::in;
 			}
@@ -293,4 +293,6 @@ bool flip()
 			armflipper.Set(0.75f);
 		}
 	}
+
+
 };
