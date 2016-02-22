@@ -59,7 +59,7 @@ public:
 				out_limit(ARM_LIMIT_OUT),
 				in_limit(ARM_LIMIT_IN),
 				handlerState(goingup_off),
-				armState(in)
+				armState(folding_in)
 	{
 
 	}
@@ -206,7 +206,7 @@ bool flip()
 				handlerState = BallHandlerState::goingup_off;
 				armState = HandlerArmState::folding_in;
 			}
-			if(down_limit.Get() == PRESSED)
+			else if(down_limit.Get() == PRESSED)
 			{
 				handlerState = BallHandlerState::down_off;
 			}
@@ -215,7 +215,7 @@ bool flip()
 		{
 			if(ballhandlerstick.GetRawButton(HANDLER_GRAB) == true)
 			{
-				handlerState = BallHandlerState::down_in;
+				handlerState = BallHandlerState::goingdown_off;
 				armState = HandlerArmState::folding_out;
 			}
 			if(up_limit.Get() == PRESSED)
@@ -306,8 +306,19 @@ bool flip()
 		else if(armState == HandlerArmState::folding_out)
 		{
 			handlerposition.Set(Relay::kForward);
-			spinmotor.Set(-0.75f);
 			armflipper.Set(0.75f);
+			if(handlerState == BallHandlerState::down_in)
+			{
+				spinmotor.Set(-0.75f);
+			}
+			else if(handlerState == BallHandlerState::down_out)
+			{
+				spinmotor.Set(0.75f);
+			}
+			else
+			{
+				spinmotor.Set(0);
+			}
 		}
 		else {
 			spinmotor.Set(0.0f);
