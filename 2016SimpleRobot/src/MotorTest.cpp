@@ -26,7 +26,7 @@ private:
 public:
 	MotorTest() :teststick(TEST_JOYSTICK_PORT),
 			drive(BALL_HANDLER_MOTOR),
-			armflipper(ARM_POSITION),
+			armflipper(ARM_POSITION_MOTOR),
 			handlerposition(HANDLER_POSITION),
 			spinmotor(SPIN_MOTOR),
 			lift(LIFT_MOTOR_SPEED)

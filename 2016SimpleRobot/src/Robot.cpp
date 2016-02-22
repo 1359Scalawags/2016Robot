@@ -67,7 +67,7 @@ public:
 
 		while(IsOperatorControl() && IsEnabled())
 		{
-			if(testswitch.Get() == PRESSED)
+			if(testswitch.Get() == true)
 			{
 				test.update();
 			}
@@ -75,7 +75,7 @@ public:
 			{
 				setDriveSpeed();
 				ballhandler.update();
-				//lift.update();
+				lift.update();
 			}
 
 			Wait(0.005); //wait for motor update time

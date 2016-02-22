@@ -10,27 +10,38 @@
 
 #include <String>
 
-//constants used in more then one file can be found here
-
-//Drive System motors
-	const int LEFTA_MOTOR_ID = 0;
-	const int LEFTB_MOTOR_ID = 1;
-	const int RIGHTA_MOTOR_ID = 2;
-	const int RIGHTB_MOTOR_ID = 3;
-
-//Motors for BallHandler
-	const int BALL_HANDLER_MOTOR = 1; //relay
-
-//Motor for the lift
-	const int LIFT_MOTOR = 6; //Talon
-	const float LIFT_MOTOR_SPEED = 0.1f; //controls speed for LIFT_MOTOR
-
-
+//DIO
 	//Encoders for the Drive System
 	const int RIGHT_CHANNEL_A = 21; //extender board
 	const int RIGHT_CHANNEL_B = 22; //extender board
 	const int LEFT_CHANNEL_A = 23; //extender board
 	const int LEFT_CHANNEL_B = 24; //extender board
+	const int ARM_LIMIT_OUT = 3;
+	const int ARM_LIMIT_IN = 4;
+
+
+//PWM
+	//Drive System motors
+	const int LEFTA_MOTOR_ID = 0;
+	const int LEFTB_MOTOR_ID = 1;
+	const int RIGHTA_MOTOR_ID = 2;
+	const int RIGHTB_MOTOR_ID = 3;
+	const int LIFT_MOTOR = 6; //Talon
+	const int ARM_POSITION_MOTOR = 4;
+
+
+//Relay
+	const int BALL_HANDLER_MOTOR = 1; //relay
+	const int HANDLER_POSITION = 0; //this is HandlerFlip
+
+
+
+
+//Speed Limits
+	const float LIFT_MOTOR_SPEED = 0.1f; //controls speed for LIFT_MOTOR
+
+
+
 
 //joysticks
 	const int LEFT_JOYSTICK_PORT = 0;
@@ -52,7 +63,7 @@
 	const int LIFT_SENSOR = 5;
 
 
-//constants for Handler
+
 
 //buttons for Handler
 	//controls the direction of the Handler's belts
@@ -74,14 +85,12 @@
 
 
 	//motors for the Handler
-		const int HANDLER_POSITION = 0; //this is HandlerFlip
-		const int ARM_POSITION = 4;
+
+
 
 //constants for Arm
 
 	//limit switches
-		const int ARM_LIMIT_OUT = 3;
-		const int ARM_LIMIT_IN = 4;
 
 	//Motors for the Arm
 		const int SPIN_MOTOR = 5; //the motor the spins the grabber roller
