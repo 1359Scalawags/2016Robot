@@ -72,9 +72,9 @@
 		const int HANDLER_ON_OFF = 1;
 
 	//buttons for controlling the Handler's position
-		const int HANDLER_UP_BUTTON = 3;
+		const int HANDLER_UP_BUTTON = 11;
 		const int HANDLER_IN_BUTTON = 4;
-		const int HANDLER_DOWN_BUTTON = 2;
+		const int HANDLER_DOWN_BUTTON = 10;
 		const int HANDLER_GRAB = 2; //puts the handler in grab mode
 		const int HANDLER_SHOOT =3; //fires the ball
 

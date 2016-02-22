@@ -250,21 +250,31 @@ bool flip()
 		if(handlerState == BallHandlerState::up_off)
 		{
 			drive.Set(Relay::kOff);
+			spinmotor.Set(0);
 		}
 		else if(handlerState == BallHandlerState::down_in)
 		{
 			drive.Set(Relay::kForward);
+			spinmotor.Set(-0.75);
 		}
 		else if(handlerState == BallHandlerState::down_out)
 		{
 			drive.Set(Relay::kReverse);
+			spinmotor.Set(0.75f);
 		}
 		else if(handlerState == BallHandlerState::goingdown_off)
 		{
 			drive.Set(Relay::kOff);
+			spinmotor.Set(0);
 		}
 		else if(handlerState == BallHandlerState::goingup_off)
 		{
+			drive.Set(Relay::kOff);
+			spinmotor.Set(0);
+		}
+		else
+		{
+			spinmotor.Set(0);
 			drive.Set(Relay::kOff);
 		}
 	}
@@ -289,39 +299,29 @@ bool flip()
 		if(armState == HandlerArmState::in)
 		{
 			handlerposition.Set(Relay::kOff);
-			spinmotor.Set(0);
+
 		}
 		else if(armState == HandlerArmState::out)
 		{
 			handlerposition.Set(Relay::kOff);
-			spinmotor.Set(0.75f);
+
 
 		}
 		else if(armState == HandlerArmState::folding_in)
 		{
 			handlerposition.Set(Relay::kReverse);
-			spinmotor.Set(0);
+
 			armflipper.Set(-0.75f);
 		}
 		else if(armState == HandlerArmState::folding_out)
 		{
 			handlerposition.Set(Relay::kForward);
 			armflipper.Set(0.75f);
-			if(handlerState == BallHandlerState::down_in)
-			{
-				spinmotor.Set(-0.75f);
-			}
-			else if(handlerState == BallHandlerState::down_out)
-			{
-				spinmotor.Set(0.75f);
-			}
-			else
-			{
-				spinmotor.Set(0);
-			}
+
 		}
-		else {
-			spinmotor.Set(0.0f);
+		else
+		{
+
 			armflipper.Set(0.0f);
 			handlerposition.Set(Relay::kOff);
 
