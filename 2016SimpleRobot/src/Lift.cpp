@@ -9,7 +9,7 @@ class Lift
 
 private:
 	Joystick liftbuttons;
-	Talon lift;
+	Talon liftmotor;
 	bool iflift;
 	bool liftup;
 	bool liftdown;
@@ -17,30 +17,30 @@ private:
 
 public:
 	Lift() : liftbuttons(RIGHT_JOYSTICK_PORT),
-		lift(LIFT_MOTOR),
+		liftmotor(LIFT_MOTOR),
 		iflift(false),
 		liftup(false),
 		liftdown(false)
 	{
-		lift.SetInverted(false);
+		liftmotor.SetInverted(false);
 	}
 
-	void update()
+	inline void update()
 	{
-		if(liftbuttons.GetRawButton(LIFT_BUTTON_UP) == PRESSED)
+		if(liftbuttons.GetRawButton(LIFT_BUTTON_UP) == true)
 		{
 			//raises tape measure
-			lift.Set(LIFT_MOTOR_SPEED);
+			liftmotor.Set(LIFT_MOTOR_SPEED);
 		}
-		else if(liftbuttons.GetRawButton(LIFT_BUTTON_DOWN) == PRESSED)
+		else if(liftbuttons.GetRawButton(LIFT_BUTTON_DOWN) == true)
 		{
 			//lower tape measure
-			lift.Set(-LIFT_MOTOR_SPEED);
+			liftmotor.Set(-LIFT_MOTOR_SPEED);
 		}
 		else
 		{
 			//turn off tape measure motor
-			lift.Set(0);
+			liftmotor.Set(0);
 		}
 
 

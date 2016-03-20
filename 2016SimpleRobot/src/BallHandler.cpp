@@ -28,7 +28,7 @@ class BallHandler
 private:
 
 	Relay drive; //belts for the Handler
-	Talon armflipper; //flips the arm
+	Talon sweeper; //flips the arm
 	Relay handlerposition; //flips handler
 	Talon spinmotor; //spins the arm
 	Joystick ballhandlerstick;
@@ -47,7 +47,7 @@ public:
 
 	BallHandler() :
 				drive(BALL_HANDLER_MOTOR),
-				armflipper(ARM_POSITION_MOTOR),
+				sweeper(ARM_POSITION_MOTOR),
 				handlerposition(HANDLER_POSITION),
 				spinmotor(SPIN_MOTOR),
 				ballhandlerstick(LEFT_JOYSTICK_PORT),
@@ -166,21 +166,44 @@ bool flip()
 
 	*/
 
-	void processHandlerState()
+inline void processHandlerState()
 	{
-		if(handlerState == BallHandlerState::up_off)
+	if(ballhandlerstick.GetRawButton(RESET_BUTTON) == true)
+	{
+		handlerState = BallHandlerState::goingup_off;
+		armState = HandlerArmState::folding_in;
+	}else
+	{
+	    if(handlerState == BallHandlerState::up_off)
 		{
 			if(ballhandlerstick.GetRawButton(HANDLER_GRAB) == true)
 			{
 				handlerState = BallHandlerState::goingdown_off;
 				armState = HandlerArmState::folding_out;
 			}
+			else if(ballhandlerstick.GetRawButton(HANDLER_SHOOT) == true)
+			{
+				handlerState = BallHandlerState::goingdown_off;
+				armState = HandlerArmState::in;
+			}
 		}
 		else if(handlerState == BallHandlerState::down_off)
 		{
 			//should never happen
-			handlerState =  BallHandlerState::down_in;
-			armState = HandlerArmState::folding_out; //may need changed
+			if(ballhandlerstick.GetRawButton(HANDLER_SHOOT) == true)
+			{
+				handlerState = BallHandlerState::down_out;
+				armState = HandlerArmState::folding_in;
+			}
+			else if(ballhandlerstick.GetRawButton(HANDLER_GRAB) == true)
+			{
+				handlerState =  BallHandlerState::down_in;
+				armState = HandlerArmState::folding_out; //may need changed
+			}
+			else
+			{
+				//should do nothing
+			}
 		}
 		else if(handlerState == BallHandlerState::down_in)
 		{
@@ -192,7 +215,7 @@ bool flip()
 		}
 		else if(handlerState == BallHandlerState::down_out)
 		{
-			if(ballhandlerstick.GetRawButton(HANDLER_SHOOT) == true)
+			if(ballhandlerstick.GetRawButton(HANDLER_GRAB) == true)
 			{
 
 				handlerState =  BallHandlerState::goingup_off;
@@ -224,9 +247,11 @@ bool flip()
 				armState = HandlerArmState::folding_in;
 			}
 		}
-		processArmState();
 	}
-	void processArmState()
+		processArmState();
+
+	}
+inline	void processArmState()
 	{
 	//if else tree for ArmState
 		if(armState == HandlerArmState::folding_out)
@@ -245,38 +270,46 @@ bool flip()
 		}
 	}
 
-	void setDriveMotors()
+inline	void setDriveMotors()
 	{
+		//cannot turn belts if the limit switch is pressed
 		if(handlerState == BallHandlerState::up_off)
 		{
 			drive.Set(Relay::kOff);
 			spinmotor.Set(0);
+			handlerposition.Set(Relay::kOff);
 		}
 		else if(handlerState == BallHandlerState::down_in)
 		{
-			drive.Set(Relay::kForward);
-			spinmotor.Set(-0.75);
+			drive.Set(Relay::kReverse);
+			spinmotor.Set(0.75);
+			handlerposition.Set(Relay::kOff);
 		}
 		else if(handlerState == BallHandlerState::down_out)
 		{
-			drive.Set(Relay::kReverse);
-			spinmotor.Set(0.75f);
+			drive.Set(Relay::kForward);
+			spinmotor.Set(-0.75f);
+			handlerposition.Set(Relay::kOff);
 		}
 		else if(handlerState == BallHandlerState::goingdown_off)
 		{
-			drive.Set(Relay::kOff);
+			drive.Set(Relay::kReverse);
 			spinmotor.Set(0);
+			handlerposition.Set(Relay::kReverse);
 		}
 		else if(handlerState == BallHandlerState::goingup_off)
 		{
-			drive.Set(Relay::kOff);
+			drive.Set(Relay::kForward);
 			spinmotor.Set(0);
+			handlerposition.Set(Relay::kForward);
 		}
 		else
 		{
 			spinmotor.Set(0);
 			drive.Set(Relay::kOff);
+			handlerposition.Set(Relay::kOff);
 		}
+
 	}
 	void updateDashboard(BallHandlerState bhs, HandlerArmState has) {
 		std::string bhs_string = "Ball: " + BallHandlerStateDescriptions[bhs];
@@ -285,46 +318,36 @@ bool flip()
 		std::string has_string = "Arm: " + HandlerArmStateDescriptions[has];
 		SmartDashboard::PutString("DB/String 1", has_string);
 
-		SmartDashboard::PutString("DB/String 2", boolAsString(ballsensor.Get()));
-
+		//SmartDashboard::PutString("DB/String 2", boolAsString(ballsensor.Get()));
+		//SmartDashboard::PutString("DB/String 3", boolAsString(handlerposition.Get()));
 	}
 
 	inline std::string boolAsString(bool b) {
 		return b ? "true" : "false";
 	}
 
-	void setFlipMotor()
+inline	void setFlipMotor()
 	{
 		//set motors based on state
 		if(armState == HandlerArmState::in)
 		{
-			handlerposition.Set(Relay::kOff);
-
+			sweeper.Set(-0.008);
 		}
 		else if(armState == HandlerArmState::out)
 		{
-			handlerposition.Set(Relay::kOff);
-
-
+			sweeper.Set(0);
 		}
 		else if(armState == HandlerArmState::folding_in)
 		{
-			handlerposition.Set(Relay::kReverse);
-
-			armflipper.Set(-0.75f);
+			sweeper.Set(-0.35f);
 		}
 		else if(armState == HandlerArmState::folding_out)
 		{
-			handlerposition.Set(Relay::kForward);
-			armflipper.Set(0.75f);
-
+			sweeper.Set(0.35f);
 		}
 		else
 		{
-
-			armflipper.Set(0.0f);
-			handlerposition.Set(Relay::kOff);
-
+			sweeper.Set(0.0f);
 		}
 	}
 

@@ -54,7 +54,7 @@
 //joysticks
 	const int LEFT_JOYSTICK_PORT = 0;
 	const int RIGHT_JOYSTICK_PORT = 1;
-	const int TEST_JOYSTICK_PORT = 2;
+	const int BALLHANDLER_JOYSTICK_PORT = 2;
 
 
 
@@ -74,32 +74,23 @@
 
 //buttons for Handler
 	//controls the direction of the Handler's belts
-		const int HANDLER_BALL_IN = 4;
+
 		const int HANDLER_BALL_OUT = 5;
 
 
 	//buttons for controlling the Handler's position
 		const int HANDLER_UP_BUTTON = 11;
+		const int TRIGGER_BUTTON = 1;
+		const int RESET_BUTTON = 8;
 		const int HANDLER_IN_BUTTON = 4;
 		const int HANDLER_DOWN_BUTTON = 10;
 		const int HANDLER_GRAB = 2; //puts the handler in grab mode
 		const int HANDLER_SHOOT =3; //fires the ball
+
 	//Buttons for moving Arm in and out
 		const int ARM_OUT_BUTTON = 7;
 		const int ARM_IN_BUTTON = 6;
 
-
-
-
-
-
-
-
-
-
-
-
-const int TEST_MODE_BUTTON = 9;
 
 const bool PRESSED = false;
 const bool NOT_PRESSED = true;
