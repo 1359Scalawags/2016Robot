@@ -2,6 +2,7 @@
 #include <VictorSP.h>
 #include <Constants.h>
 #include <string>
+#include <Lift.cpp>
 
 
 
@@ -36,6 +37,7 @@ private:
 	DigitalInput ballsensor; //used to enable/disable the ball handler automatically
 	//bool switched;
 	bool handler_on_off;
+	Lift lifter;
 	DigitalInput up_limit;
 	DigitalInput down_limit;
 	DigitalInput out_limit;
@@ -54,6 +56,7 @@ public:
 				ballsensor(BALLSWITCH),
 				//switched(false)
 				handler_on_off(false),
+				lifter(&ballhandlerstick),
 				up_limit(HANDLER_LIMIT_UP),
 				down_limit(HANDLER_LIMIT_DOWN),
 				out_limit(ARM_LIMIT_OUT),

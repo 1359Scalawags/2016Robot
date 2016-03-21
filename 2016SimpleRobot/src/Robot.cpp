@@ -2,7 +2,7 @@
 #include <VictorSP.h>
 #include <Constants.h>
 #include <BallHandler.cpp>
-#include <Lift.cpp>
+
 
 
 class Robot: public SampleRobot
@@ -34,7 +34,7 @@ class Robot: public SampleRobot
 
 	//objects for the other systems on the robot
 		BallHandler ballhandler;
-		//Lift lift;
+
 
 
 

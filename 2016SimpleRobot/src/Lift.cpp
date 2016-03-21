@@ -8,16 +8,17 @@ class Lift
 {
 
 private:
-	Joystick liftbuttons;
+	Joystick* liftbuttons;
 	Talon liftmotor;
 	bool iflift;
 	bool liftup;
 	bool liftdown;
+
 	//Servo ratchet;
 
 
 public:
-	Lift() : liftbuttons(RIGHT_JOYSTICK_PORT),
+	Lift(Joystick* buttons) : liftbuttons(buttons),
 		liftmotor(LIFT_MOTOR),
 		iflift(false),
 		liftup(false),
@@ -28,12 +29,12 @@ public:
 
 	inline void update()
 	{
-		if(liftbuttons.GetRawButton(LIFT_BUTTON_UP) == true)
+		if(liftbuttons->GetRawButton(LIFT_BUTTON_UP) == true)
 		{
 			//raises tape measure
 			liftmotor.Set(LIFT_MOTOR_SPEED);
 		}
-		else if(liftbuttons.GetRawButton(LIFT_BUTTON_DOWN) == true)
+		else if(liftbuttons->GetRawButton(LIFT_BUTTON_DOWN) == true)
 		{
 			//lower tape measure
 			liftmotor.Set(-LIFT_MOTOR_SPEED);
