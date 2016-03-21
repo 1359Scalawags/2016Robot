@@ -13,6 +13,7 @@ class Robot: public SampleRobot
 	//joysticks for control
 		Joystick leftstick;
 		Joystick rightstick;
+		//Joystick Three;
 
 	//controls whether or not the robbot can go forward
 		bool driveforward;

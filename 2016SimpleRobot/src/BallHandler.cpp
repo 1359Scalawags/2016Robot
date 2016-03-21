@@ -50,7 +50,7 @@ public:
 				sweeper(ARM_POSITION_MOTOR),
 				handlerposition(HANDLER_POSITION),
 				spinmotor(SPIN_MOTOR),
-				ballhandlerstick(LEFT_JOYSTICK_PORT),
+				ballhandlerstick(BUTTONS_JOYSTICK_PORT),
 				ballsensor(BALLSWITCH),
 				//switched(false)
 				handler_on_off(false),
@@ -299,7 +299,7 @@ inline	void setDriveMotors()
 		}
 		else if(handlerState == BallHandlerState::goingup_off)
 		{
-			drive.Set(Relay::kForward);
+			drive.Set(Relay::kOff);
 			spinmotor.Set(0);
 			handlerposition.Set(Relay::kForward);
 		}

@@ -15,6 +15,7 @@ private:
 	bool liftdown;
 	//Servo ratchet;
 
+
 public:
 	Lift() : liftbuttons(RIGHT_JOYSTICK_PORT),
 		liftmotor(LIFT_MOTOR),

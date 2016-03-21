@@ -42,19 +42,14 @@
 	const int BALL_HANDLER_MOTOR = 1; //relay
 	const int HANDLER_POSITION = 0; //this is HandlerFlip
 
-
-
-
 //Speed Limits
 	const float LIFT_MOTOR_SPEED = 0.1f; //controls speed for LIFT_MOTOR
-
-
 
 
 //joysticks
 	const int LEFT_JOYSTICK_PORT = 0;
 	const int RIGHT_JOYSTICK_PORT = 1;
-	const int BALLHANDLER_JOYSTICK_PORT = 2;
+	const int BUTTONS_JOYSTICK_PORT = 2;
 
 
 
@@ -66,10 +61,6 @@
 
 
 	const bool IFLIFT = true;
-
-
-
-
 
 
 //buttons for Handler
