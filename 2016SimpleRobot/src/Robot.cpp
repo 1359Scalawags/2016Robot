@@ -102,11 +102,23 @@ public:
 
 	void Autonomous() //controls autonomous
 	{
+		//chassis.SetSafetyEnabled(true)
+		Timer drivetimer = new Timer();
+		drivetimer.Start();
 		while(IsAutonomous() && IsEnabled())
 		{
-			chassis.TankDrive(.5f, .5f);
+			if(drivetimer.Get() < AUTO_DRIVE_TIME)
+			{
+				chassis.TankDrive(0.5f, 0.5f);
+			}
+			else
+			{
+				chassis.TankDrive(0f, 0f);
+			}
+
 			Wait(0.005);
 		}
+		drivetimer.Stop();
 	}
 
 

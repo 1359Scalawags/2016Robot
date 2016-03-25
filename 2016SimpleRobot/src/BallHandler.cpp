@@ -2,7 +2,7 @@
 #include <VictorSP.h>
 #include <Constants.h>
 #include <string>
-#include <Lift.cpp>
+#include <Lift.cpp> //added
 
 
 
@@ -56,7 +56,7 @@ public:
 				ballsensor(BALLSWITCH),
 				//switched(false)
 				handler_on_off(false),
-				lifter(&ballhandlerstick),
+				lifter(&ballhandlerstick), //added
 				up_limit(HANDLER_LIMIT_UP),
 				down_limit(HANDLER_LIMIT_DOWN),
 				out_limit(ARM_LIMIT_OUT),
