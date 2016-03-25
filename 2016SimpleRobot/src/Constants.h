@@ -82,7 +82,7 @@
 		const int ARM_OUT_BUTTON = 7;
 		const int ARM_IN_BUTTON = 6;
 
-const float AUTO_DRIVE_TIME = 5.0f;
+const float AUTO_DRIVE_TIME = 4.0f;
 
 const bool PRESSED = false;
 const bool NOT_PRESSED = true;
