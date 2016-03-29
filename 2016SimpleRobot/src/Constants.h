@@ -24,6 +24,7 @@
 	const int ARM_LIMIT_OUT = 3;
 	const int ARM_LIMIT_IN = 4;
 	const int LIFT_SENSOR = 5;
+	const int ARM_DOWN_LIMIT = 6;
 
 
 //PWM
@@ -82,6 +83,7 @@
 		const int ARM_OUT_BUTTON = 7;
 		const int ARM_IN_BUTTON = 6;
 
+		const int ARM_OUT_SPIN_BUTTON = 1;
 
 const bool PRESSED = false;
 const bool NOT_PRESSED = true;

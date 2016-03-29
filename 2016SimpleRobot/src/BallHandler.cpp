@@ -12,8 +12,9 @@ enum BallHandlerState
 	goingup_off = 1,
 	goingdown_off = 2,
 	down_off = 3,
-	down_in = 4,
-	down_out = 5
+	down_in_grab = 4,
+	down_out_grab = 5,
+	arm_down = 6 //to lift door and push down see saws
 };
 
 enum HandlerArmState
@@ -38,10 +39,11 @@ private:
 	//bool switched;
 	bool handler_on_off;
 	Lift lifter;
-	DigitalInput up_limit;
-	DigitalInput down_limit;
-	DigitalInput out_limit;
-	DigitalInput in_limit;
+	DigitalInput ballhandler_up_limit;
+	DigitalInput ballhandler_down_limit;
+	DigitalInput arm_grab_limit;
+	DigitalInput arm_in_limit;
+	DigitalInput arm_down_limit;
 	BallHandlerState handlerState;
 	HandlerArmState armState;
 
@@ -57,10 +59,11 @@ public:
 				//switched(false)
 				handler_on_off(false),
 				lifter(&ballhandlerstick),
-				up_limit(HANDLER_LIMIT_UP),
-				down_limit(HANDLER_LIMIT_DOWN),
-				out_limit(ARM_LIMIT_OUT),
-				in_limit(ARM_LIMIT_IN),
+				ballhandler_up_limit(HANDLER_LIMIT_UP),
+				ballhandler_down_limit(HANDLER_LIMIT_DOWN),
+				arm_grab_limit(ARM_LIMIT_OUT),
+				arm_in_limit(ARM_LIMIT_IN),
+				arm_down_limit(ARM_DOWN_LIMIT),
 				handlerState(goingup_off),
 				armState(folding_in)
 	{
@@ -195,12 +198,12 @@ inline void processHandlerState()
 			//should never happen
 			if(ballhandlerstick.GetRawButton(HANDLER_SHOOT) == true)
 			{
-				handlerState = BallHandlerState::down_out;
+				handlerState = BallHandlerState::down_out_grab;
 				armState = HandlerArmState::folding_in;
 			}
 			else if(ballhandlerstick.GetRawButton(HANDLER_GRAB) == true)
 			{
-				handlerState =  BallHandlerState::down_in;
+				handlerState =  BallHandlerState::down_in_grab;
 				armState = HandlerArmState::folding_out; //may need changed
 			}
 			else
@@ -208,7 +211,7 @@ inline void processHandlerState()
 				//should do nothing
 			}
 		}
-		else if(handlerState == BallHandlerState::down_in)
+		else if(handlerState == BallHandlerState::down_in_grab)
 		{
 			if(ballhandlerstick.GetRawButton(HANDLER_UP_BUTTON) == true || ballsensor.Get() == PRESSED)
 			{
@@ -216,7 +219,7 @@ inline void processHandlerState()
 				armState = HandlerArmState::folding_in;
 			}
 		}
-		else if(handlerState == BallHandlerState::down_out)
+		else if(handlerState == BallHandlerState::down_out_grab)
 		{
 			if(ballhandlerstick.GetRawButton(HANDLER_GRAB) == true)
 			{
@@ -232,7 +235,7 @@ inline void processHandlerState()
 				handlerState = BallHandlerState::goingup_off;
 				armState = HandlerArmState::folding_in;
 			}
-			else if(down_limit.Get() == PRESSED)
+			else if(ballhandler_down_limit.Get() == PRESSED)
 			{
 				handlerState = BallHandlerState::down_off;
 			}
@@ -244,7 +247,7 @@ inline void processHandlerState()
 				handlerState = BallHandlerState::goingdown_off;
 				armState = HandlerArmState::folding_out;
 			}
-			if(up_limit.Get() == PRESSED)
+			if(ballhandler_up_limit.Get() == PRESSED)
 			{
 				handlerState = BallHandlerState::up_off;
 				armState = HandlerArmState::folding_in;
@@ -259,14 +262,14 @@ inline	void processArmState()
 	//if else tree for ArmState
 		if(armState == HandlerArmState::folding_out)
 		{
-			if(out_limit.Get() == PRESSED)
+			if(arm_grab_limit.Get() == PRESSED)
 			{
 				armState = HandlerArmState::out;
 			}
 		}
 		else if(armState == HandlerArmState::folding_in)
 		{
-			if(in_limit.Get() == PRESSED)
+			if(arm_in_limit.Get() == PRESSED)
 			{
 				armState = HandlerArmState::in;
 			}
@@ -282,13 +285,21 @@ inline	void setDriveMotors()
 			spinmotor.Set(0);
 			handlerposition.Set(Relay::kOff);
 		}
-		else if(handlerState == BallHandlerState::down_in)
+		else if(handlerState == BallHandlerState::down_in_grab)
 		{
 			drive.Set(Relay::kReverse);
-			spinmotor.Set(0.75);
+
 			handlerposition.Set(Relay::kOff);
+			if(ballhandlerstick.GetRawButton(ARM_OUT_SPIN_BUTTON))
+			{
+				spinmotor.Set(-0.75f);
+			}
+			else
+			{
+				spinmotor.Set(0.75f);
+			}
 		}
-		else if(handlerState == BallHandlerState::down_out)
+		else if(handlerState == BallHandlerState::down_out_grab)
 		{
 			drive.Set(Relay::kForward);
 			spinmotor.Set(-0.75f);
@@ -338,7 +349,7 @@ inline	void setFlipMotor()
 		}
 		else if(armState == HandlerArmState::out)
 		{
-			sweeper.Set(0);
+			sweeper.Set(0.01);
 		}
 		else if(armState == HandlerArmState::folding_in)
 		{
@@ -350,7 +361,7 @@ inline	void setFlipMotor()
 		}
 		else
 		{
-			sweeper.Set(0.0f);
+			sweeper.Set(0.01f);
 		}
 	}
 
