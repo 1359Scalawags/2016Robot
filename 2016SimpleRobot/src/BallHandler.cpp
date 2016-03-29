@@ -13,8 +13,8 @@ enum BallHandlerState
 	goingdown_off = 2,
 	down_off = 3,
 	down_in_grab = 4,
-	down_out_grab = 5,
-	arm_down = 6 //to lift door and push down see saws
+	down_out_grab = 5
+
 };
 
 enum HandlerArmState
@@ -22,7 +22,8 @@ enum HandlerArmState
 	folding_in = 0,
 	folding_out = 1,
 	in = 2,
-	out = 3
+	out = 3,
+	arm_down = 6 //to lift door and push down see saws
 };
 
 class BallHandler
@@ -239,6 +240,7 @@ inline void processHandlerState()
 			{
 				handlerState = BallHandlerState::down_off;
 			}
+
 		}
 		else if(handlerState == BallHandlerState::goingup_off)
 		{
@@ -253,6 +255,7 @@ inline void processHandlerState()
 				armState = HandlerArmState::folding_in;
 			}
 		}
+
 	}
 		processArmState();
 
@@ -273,6 +276,10 @@ inline	void processArmState()
 			{
 				armState = HandlerArmState::in;
 			}
+		}
+		else if(handlerState == BallHandlerState::arm_down)
+		{
+
 		}
 	}
 
