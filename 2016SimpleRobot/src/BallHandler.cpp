@@ -195,7 +195,7 @@ inline void processHandlerState()
 				handlerState = BallHandlerState::goingdown_off;
 				armState = HandlerArmState::in;
 			}
-			else if(ballhandlerstick.GetRawButton(ARM_DOWN_BUTTON))
+			else if(ballhandlerstick.GetRawButton(ARM_DOWN_BUTTON) == true)
 			{
 				armState == HandlerArmState::folding_down;
 			}
@@ -263,32 +263,32 @@ inline void processHandlerState()
 		}
 
 	}
-		processArmState();
+		//processArmState();
 
 	}
-inline	void processArmState()
-	{
-	//if else tree for ArmState
-		if(armState == HandlerArmState::folding_out)
-		{
-
-		}
-		else if(armState == HandlerArmState::folding_in)
-		{
-
-		}
-		else if(armState == HandlerArmState::folding_down)
-		{
-
-		}
-//		else if(armState == HandlerArmState::arm_down)
+//inline	void processArmState()
+//	{
+//	//if else tree for ArmState
+//		if(armState == HandlerArmState::folding_out)
 //		{
-//			if()
-//			{
 //
-//			}
 //		}
-	}
+//		else if(armState == HandlerArmState::folding_in)
+//		{
+//
+//		}
+//		else if(armState == HandlerArmState::folding_down)
+//		{
+//
+//		}
+////		else if(armState == HandlerArmState::arm_down)
+////		{
+////			if()
+////			{
+////
+////			}
+////		}
+//	}
 
 inline	void setDriveMotors()
 	{
@@ -379,8 +379,13 @@ inline	void setFlipMotor()
 			if(arm_in_limit.Get() == PRESSED)
 			{
 				armState = HandlerArmState::in;
+				arm_position_motor.Set(-0.008f);
 			}
-			arm_position_motor.Set(-0.35f);
+			else
+			{
+				arm_position_motor.Set(-0.35f);
+			}
+
 		}
 		else if(armState == HandlerArmState::folding_out)
 		{
@@ -388,7 +393,10 @@ inline	void setFlipMotor()
 			{
 				armState = HandlerArmState::out;
 			}
-			arm_position_motor.Set(0.35f);
+			else
+			{
+				arm_position_motor.Set(0.35f);
+			}
 		}
 		else if(armState == HandlerArmState::arm_down)
 		{
@@ -399,6 +407,10 @@ inline	void setFlipMotor()
 			if(arm_down_limit.Get() == PRESSED)
 			{
 				armState = HandlerArmState::arm_down;
+			}
+			else
+			{
+				arm_position_motor.Set(0.35f);
 			}
 		}
 		else
