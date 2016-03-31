@@ -73,7 +73,7 @@
 	//buttons for controlling the Handler's position
 		const int HANDLER_UP_BUTTON = 11;
 		const int TRIGGER_BUTTON = 1;
-		const int RESET_BUTTON = 8;
+		const int RESET_BUTTON = 1;
 		const int HANDLER_IN_BUTTON = 4;
 		const int HANDLER_DOWN_BUTTON = 10;
 		const int HANDLER_GRAB = 2; //puts the handler in grab mode
@@ -84,6 +84,7 @@
 		const int ARM_IN_BUTTON = 6;
 
 		const int ARM_OUT_SPIN_BUTTON = 1;
+		const int ARM_DOWN = 4;
 
 const bool PRESSED = false;
 const bool NOT_PRESSED = true;

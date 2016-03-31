@@ -23,7 +23,7 @@ enum HandlerArmState
 	folding_out = 1,
 	in = 2,
 	out = 3,
-	arm_down = 6 //to lift door and push down see saws
+	arm_down = 4 //to lift door and push down see saws
 };
 
 class BallHandler
@@ -31,9 +31,9 @@ class BallHandler
 private:
 
 	Relay drive; //belts for the Handler
-	Talon sweeper; //flips the arm
+	Talon arm_position_motor; //flips the arm
 	Relay handlerposition; //flips handler
-	Talon spinmotor; //spins the arm
+	Talon spinnermotor; //spins the arm
 	Joystick ballhandlerstick;
 	bool flipped = true;
 	DigitalInput ballsensor; //used to enable/disable the ball handler automatically
@@ -52,9 +52,9 @@ public:
 
 	BallHandler() :
 				drive(BALL_HANDLER_MOTOR),
-				sweeper(ARM_POSITION_MOTOR),
+				arm_position_motor(ARM_POSITION_MOTOR),
 				handlerposition(HANDLER_POSITION),
-				spinmotor(SPIN_MOTOR),
+				spinnermotor(SPIN_MOTOR),
 				ballhandlerstick(BUTTONS_JOYSTICK_PORT),
 				ballsensor(BALLSWITCH),
 				//switched(false)
@@ -179,6 +179,7 @@ inline void processHandlerState()
 	{
 		handlerState = BallHandlerState::goingup_off;
 		armState = HandlerArmState::folding_in;
+
 	}else
 	{
 	    if(handlerState == BallHandlerState::up_off)
@@ -269,6 +270,11 @@ inline	void processArmState()
 			{
 				armState = HandlerArmState::out;
 			}
+			if(arm_down_limit.Get() == PRESSED)
+			{
+				armState = HandlerArmState::arm_down;
+			}
+
 		}
 		else if(armState == HandlerArmState::folding_in)
 		{
@@ -277,10 +283,10 @@ inline	void processArmState()
 				armState = HandlerArmState::in;
 			}
 		}
-		else if(handlerState == BallHandlerState::arm_down)
-		{
-
-		}
+//		else if(armState == HandlerArmState::arm_down)
+//		{
+//			if()
+//		}
 	}
 
 inline	void setDriveMotors()
@@ -289,7 +295,7 @@ inline	void setDriveMotors()
 		if(handlerState == BallHandlerState::up_off)
 		{
 			drive.Set(Relay::kOff);
-			spinmotor.Set(0);
+			spinnermotor.Set(0);
 			handlerposition.Set(Relay::kOff);
 		}
 		else if(handlerState == BallHandlerState::down_in_grab)
@@ -299,37 +305,48 @@ inline	void setDriveMotors()
 			handlerposition.Set(Relay::kOff);
 			if(ballhandlerstick.GetRawButton(ARM_OUT_SPIN_BUTTON))
 			{
-				spinmotor.Set(-0.75f);
+				spinnermotor.Set(-0.75f);
 			}
 			else
 			{
-				spinmotor.Set(0.75f);
+				spinnermotor.Set(0.75f);
 			}
 		}
 		else if(handlerState == BallHandlerState::down_out_grab)
 		{
-			drive.Set(Relay::kForward);
-			spinmotor.Set(-0.75f);
-			handlerposition.Set(Relay::kOff);
+			if(arm_grab_limit.Get() == NOT_PRESSED && ballhandlerstick.GetRawButton(HANDLER_GRAB))
+			{
+				drive.Set(Relay::kForward);
+				spinnermotor.Set(-0.75f);
+				handlerposition.Set(Relay::kOff);
+			}
+			else
+			{
+				drive.Set(Relay::kForward);
+				spinnermotor.Set(-0.75f);
+				handlerposition.Set(Relay::kOff);
+			}
+
 		}
 		else if(handlerState == BallHandlerState::goingdown_off)
 		{
 			drive.Set(Relay::kReverse);
-			spinmotor.Set(0);
+			spinnermotor.Set(0);
 			handlerposition.Set(Relay::kReverse);
 		}
 		else if(handlerState == BallHandlerState::goingup_off)
 		{
 			drive.Set(Relay::kOff);
-			spinmotor.Set(0);
+			spinnermotor.Set(0);
 			handlerposition.Set(Relay::kForward);
 		}
 		else
 		{
-			spinmotor.Set(0);
+			spinnermotor.Set(0);
 			drive.Set(Relay::kOff);
 			handlerposition.Set(Relay::kOff);
 		}
+
 
 	}
 	void updateDashboard(BallHandlerState bhs, HandlerArmState has) {
@@ -352,23 +369,27 @@ inline	void setFlipMotor()
 		//set motors based on state
 		if(armState == HandlerArmState::in)
 		{
-			sweeper.Set(-0.008);
+			arm_position_motor.Set(-0.008);
 		}
 		else if(armState == HandlerArmState::out)
 		{
-			sweeper.Set(0.01);
+			arm_position_motor.Set(0.01);
 		}
 		else if(armState == HandlerArmState::folding_in)
 		{
-			sweeper.Set(-0.35f);
+			arm_position_motor.Set(-0.35f);
 		}
 		else if(armState == HandlerArmState::folding_out)
 		{
-			sweeper.Set(0.35f);
+			arm_position_motor.Set(0.35f);
+		}
+		else if(armState == HandlerArmState::arm_down)
+		{
+			arm_position_motor.Set(0.35f);
 		}
 		else
 		{
-			sweeper.Set(0.01f);
+			arm_position_motor.Set(0.01f);
 		}
 	}
 
