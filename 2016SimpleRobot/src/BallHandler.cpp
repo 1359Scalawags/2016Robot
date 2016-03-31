@@ -23,7 +23,8 @@ enum HandlerArmState
 	folding_out = 1,
 	in = 2,
 	out = 3,
-	arm_down = 4 //to lift door and push down see saws
+	arm_down = 4, //to lift door and push down see saws
+	folding_down = 5
 };
 
 class BallHandler
@@ -194,6 +195,10 @@ inline void processHandlerState()
 				handlerState = BallHandlerState::goingdown_off;
 				armState = HandlerArmState::in;
 			}
+			else if(ballhandlerstick.GetRawButton(ARM_DOWN_BUTTON))
+			{
+				armState == HandlerArmState::folding_down;
+			}
 		}
 		else if(handlerState == BallHandlerState::down_off)
 		{
@@ -270,11 +275,6 @@ inline	void processArmState()
 			{
 				armState = HandlerArmState::out;
 			}
-			if(arm_down_limit.Get() == PRESSED)
-			{
-				armState = HandlerArmState::arm_down;
-			}
-
 		}
 		else if(armState == HandlerArmState::folding_in)
 		{
@@ -283,9 +283,19 @@ inline	void processArmState()
 				armState = HandlerArmState::in;
 			}
 		}
+		else if(armState == HandlerArmState::folding_down)
+		{
+			if(arm_down_limit.Get() == PRESSED)
+			{
+				armState = HandlerArmState::arm_down;
+			}
+		}
 //		else if(armState == HandlerArmState::arm_down)
 //		{
 //			if()
+//			{
+//
+//			}
 //		}
 	}
 

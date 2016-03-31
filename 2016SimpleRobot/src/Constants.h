@@ -84,7 +84,7 @@
 		const int ARM_IN_BUTTON = 6;
 
 		const int ARM_OUT_SPIN_BUTTON = 1;
-		const int ARM_DOWN = 4;
+		const int ARM_DOWN_BUTTON = 4;
 
 const bool PRESSED = false;
 const bool NOT_PRESSED = true;
