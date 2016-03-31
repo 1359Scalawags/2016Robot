@@ -392,6 +392,7 @@ inline	void setFlipMotor()
 			if(arm_grab_limit.Get() == PRESSED)
 			{
 				armState = HandlerArmState::out;
+				arm_position_motor.Set(0.0f);
 			}
 			else
 			{
