@@ -13,7 +13,7 @@ enum BallHandlerState
 	goingdown_off = 2,
 	down_off = 3,
 	down_in_grab = 4,
-	down_out_grab = 5
+	down_out_shoot = 5
 
 };
 
@@ -42,9 +42,9 @@ private:
 	Lift lifter;
 	DigitalInput ballhandler_up_limit;
 	DigitalInput ballhandler_down_limit;
-	DigitalInput arm_grab_limit;
-	DigitalInput arm_in_limit;
-	DigitalInput arm_down_limit;
+	DigitalInput arm_grab_limit; //for grab mode
+	DigitalInput arm_in_limit; //folded in
+	DigitalInput arm_down_limit; //all the way down
 	BallHandlerState handlerState;
 	HandlerArmState armState;
 
@@ -200,7 +200,7 @@ inline void processHandlerState()
 			//should never happen
 			if(ballhandlerstick.GetRawButton(HANDLER_SHOOT) == true)
 			{
-				handlerState = BallHandlerState::down_out_grab;
+				handlerState = BallHandlerState::down_out_shoot;
 				armState = HandlerArmState::folding_in;
 			}
 			else if(ballhandlerstick.GetRawButton(HANDLER_GRAB) == true)
@@ -221,7 +221,7 @@ inline void processHandlerState()
 				armState = HandlerArmState::folding_in;
 			}
 		}
-		else if(handlerState == BallHandlerState::down_out_grab)
+		else if(handlerState == BallHandlerState::down_out_shoot)
 		{
 			if(ballhandlerstick.GetRawButton(HANDLER_GRAB) == true)
 			{
@@ -312,20 +312,11 @@ inline	void setDriveMotors()
 				spinnermotor.Set(0.75f);
 			}
 		}
-		else if(handlerState == BallHandlerState::down_out_grab)
+		else if(handlerState == BallHandlerState::down_out_shoot)
 		{
-			if(arm_grab_limit.Get() == NOT_PRESSED && ballhandlerstick.GetRawButton(HANDLER_GRAB))
-			{
 				drive.Set(Relay::kForward);
 				spinnermotor.Set(-0.75f);
 				handlerposition.Set(Relay::kOff);
-			}
-			else
-			{
-				drive.Set(Relay::kForward);
-				spinnermotor.Set(-0.75f);
-				handlerposition.Set(Relay::kOff);
-			}
 
 		}
 		else if(handlerState == BallHandlerState::goingdown_off)
@@ -369,11 +360,22 @@ inline	void setFlipMotor()
 		//set motors based on state
 		if(armState == HandlerArmState::in)
 		{
-			arm_position_motor.Set(-0.008);
+			arm_position_motor.Set(-0.008f);
 		}
 		else if(armState == HandlerArmState::out)
 		{
-			arm_position_motor.Set(0.01);
+			if(arm_grab_limit.Get() == NOT_PRESSED && ballhandlerstick.GetRawButton(HANDLER_GRAB))
+			{
+				arm_position_motor.Set(0.35f);
+			}
+			else if(arm_grab_limit.Get() == NOT_PRESSED)
+			{
+				arm_position_motor.Set(0.01f);
+			}
+			else
+			{
+				arm_position_motor.Set(0.0f);
+			}
 		}
 		else if(armState == HandlerArmState::folding_in)
 		{
