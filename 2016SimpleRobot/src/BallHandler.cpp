@@ -401,7 +401,15 @@ inline	void setFlipMotor()
 		}
 		else if(armState == HandlerArmState::arm_down)
 		{
-			arm_position_motor.Set(0.35f);
+			if(arm_down_limit.Get() == NOT_PRESSED)
+			{
+				arm_position_motor.Set(0.35f);
+			}
+			else
+			{
+				arm_position_motor.Set(0.35f);
+			}
+
 		}
 		else if (armState == HandlerArmState::folding_down)
 		{
