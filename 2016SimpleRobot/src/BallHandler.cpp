@@ -271,24 +271,15 @@ inline	void processArmState()
 	//if else tree for ArmState
 		if(armState == HandlerArmState::folding_out)
 		{
-			if(arm_grab_limit.Get() == PRESSED)
-			{
-				armState = HandlerArmState::out;
-			}
+
 		}
 		else if(armState == HandlerArmState::folding_in)
 		{
-			if(arm_in_limit.Get() == PRESSED)
-			{
-				armState = HandlerArmState::in;
-			}
+
 		}
 		else if(armState == HandlerArmState::folding_down)
 		{
-			if(arm_down_limit.Get() == PRESSED)
-			{
-				armState = HandlerArmState::arm_down;
-			}
+
 		}
 //		else if(armState == HandlerArmState::arm_down)
 //		{
@@ -374,13 +365,9 @@ inline	void setFlipMotor()
 		}
 		else if(armState == HandlerArmState::out)
 		{
-			if(arm_grab_limit.Get() == NOT_PRESSED && ballhandlerstick.GetRawButton(HANDLER_GRAB))
+			if(arm_grab_limit.Get() == NOT_PRESSED)
 			{
 				arm_position_motor.Set(0.35f);
-			}
-			else if(arm_grab_limit.Get() == NOT_PRESSED)
-			{
-				arm_position_motor.Set(0.01f);
 			}
 			else
 			{
@@ -389,15 +376,30 @@ inline	void setFlipMotor()
 		}
 		else if(armState == HandlerArmState::folding_in)
 		{
+			if(arm_in_limit.Get() == PRESSED)
+			{
+				armState = HandlerArmState::in;
+			}
 			arm_position_motor.Set(-0.35f);
 		}
 		else if(armState == HandlerArmState::folding_out)
 		{
+			if(arm_grab_limit.Get() == PRESSED)
+			{
+				armState = HandlerArmState::out;
+			}
 			arm_position_motor.Set(0.35f);
 		}
 		else if(armState == HandlerArmState::arm_down)
 		{
 			arm_position_motor.Set(0.35f);
+		}
+		else if (armState == HandlerArmState::folding_down)
+		{
+			if(arm_down_limit.Get() == PRESSED)
+			{
+				armState = HandlerArmState::arm_down;
+			}
 		}
 		else
 		{
